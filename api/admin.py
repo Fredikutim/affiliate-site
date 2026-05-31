@@ -4,41 +4,30 @@ import urllib.request
 
 KV_URL = os.environ.get("KV_REST_API_URL", "")
 KV_TOKEN = os.environ.get("KV_REST_API_TOKEN", "")
-ADMIN_PASS = os.environ.get("ADMIN_PASSWORD", "admin123")
+ADMIN_PASS = os.environ.get("ADMIN_PASSWORD", "")
 CONTENT_KEY = "site_content"
 
 class handler(BaseHTTPRequestHandler):
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        self.end_headers()
-
     def do_GET(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
         if not KV_URL or not KV_TOKEN:
-            self._json(200, {"ok": True, "data": self._default_content()})
+            self._json(200, {"ok": True, "data": self._default()})
             return
         try:
             data = self._kv_get(CONTENT_KEY)
             if data:
                 self._json(200, {"ok": True, "data": json.loads(data)})
             else:
-                self._json(200, {"ok": True, "data": self._default_content()})
+                self._json(200, {"ok": True, "data": self._default()})
         except:
-            self._json(200, {"ok": True, "data": self._default_content()})
+            self._json(200, {"ok": True, "data": self._default()})
 
     def do_POST(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
         length = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(length)) if length else {}
         action = body.get("action", "")
         if action == "login":
-            if body.get("password") == ADMIN_PASS:
-                self._json(200, {"ok": True})
-            else:
-                self._json(401, {"ok": False, "error": "Password salah"})
+            ok = body.get("password") == ADMIN_PASS
+            self._json(200 if ok else 401, {"ok": ok, "error": "" if ok else "Password salah"})
         elif action == "save":
             if body.get("password") != ADMIN_PASS:
                 self._json(401, {"ok": False, "error": "Password salah"})
@@ -46,15 +35,25 @@ class handler(BaseHTTPRequestHandler):
             content = body.get("content", {})
             if KV_URL and KV_TOKEN:
                 self._kv_set(CONTENT_KEY, json.dumps(content))
-            self._json(200, {"ok": True, "message": "Tersimpan! Deploy ulang..."})
+            self._json(200, {"ok": True, "message": "Tersimpan!"})
         else:
             self._json(400, {"ok": False, "error": "Unknown action"})
 
     def _json(self, code, data):
         self.send_response(code)
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
         self.wfile.write(json.dumps(data).encode())
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
 
     def _kv_get(self, key):
         req = urllib.request.Request(f"{KV_URL}/get/{key}",
@@ -64,12 +63,12 @@ class handler(BaseHTTPRequestHandler):
 
     def _kv_set(self, key, value):
         req = urllib.request.Request(f"{KV_URL}/set/{key}",
-            data=json.dumps(value).encode(),
+            data=value.encode(),
             headers={"Authorization": f"Bearer {KV_TOKEN}", "Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=10):
             pass
 
-    def _default_content(self):
+    def _default(self):
         return {"sections": [
             {"id": "investasi", "icon": "💰", "title": "Investasi & Saham", "desc": "Mulai investasi dengan platform terpercaya",
              "links": [
