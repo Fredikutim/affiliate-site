@@ -17,11 +17,11 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         length = int(self.headers.get("content-length", 0))
-        raw = self.rfile.read(length)
+        raw = self.rfile.read(length) if length > 0 else b""
         try:
-            body = json.loads(raw)
-        except:
-            self.reply(400, {"ok": False, "error": "Invalid JSON"})
+            body = json.loads(raw.decode("utf-8"))
+        except Exception as e:
+            self.reply(400, {"ok": False, "error": f"Invalid JSON: {raw[:200]} / {str(e)}"})
             return
         action = body.get("action")
         if action == "login":
