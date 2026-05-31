@@ -306,7 +306,12 @@ ATURAN RESPON:
         const updated = JSON.parse(cleaned);
         content = updated;
         renderEditor();
-        addChat("✅ Berhasil diedit! Cek hasil di atas. Jangan lupa klik <b>Simpan Semua</b> untuk menyimpan.", "bot");
+        const saveRes = await fetch("/api/admin", {
+          method: "POST", headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({action: "save", password, content})
+        });
+        if (saveRes.ok) addChat("✅ Selesai! Perubahan sudah saya simpan dan langsung tampil di website.", "bot");
+        else addChat("✅ Berhasil diedit, tapi gagal menyimpan. Coba klik Simpan Semua manual.", "bot");
       } catch {
         addChat("Maaf, saya tidak bisa memproses perintah itu. Coba dengan cara lain. Atau ketik <i>saran</i> untuk rekomendasi.", "bot");
       }
