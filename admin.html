@@ -107,9 +107,9 @@ function renderEditor() {
       const link = section.links[i];
       html += `<div class="link-row" data-i="${i}">
         <div class="link-fields">
-          <input value="${link.icon}" placeholder="Icon" oninput="update(${section.id},${i},'icon',this.value)">
-          <input value="${link.name}" placeholder="Nama" oninput="update(${section.id},${i},'name',this.value)">
-          <input value="${link.url}" placeholder="URL" oninput="update(${section.id},${i},'url',this.value)">
+          <input value="${link.icon}" placeholder="Icon" oninput="update('${section.id}',${i},'icon',this.value)">
+          <input value="${link.name}" placeholder="Nama" oninput="update('${section.id}',${i},'name',this.value)">
+          <input value="${link.url}" placeholder="URL" oninput="update('${section.id}',${i},'url',this.value)">
         </div>
         <button class="remove-btn" onclick="removeLink('${section.id}',${i})"><i class="fas fa-trash-can"></i> Hapus</button>
       </div>`;
