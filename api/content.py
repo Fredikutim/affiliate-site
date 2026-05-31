@@ -26,7 +26,7 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
                {"icon": "fas fa-box-open", "name": "Lazada", "desc": "Belanja online dengan harga terbaik setiap hari", "url": "#"}]},
     {"id": "keuangan", "icon": "🏦", "title": "Keuangan Digital", "desc": "Transaksi & pembayaran online lebih hemat",
      "links": [{"icon": "https://i.ibb.co.com/Rk3tmh4c/gopay.jpg", "name": "GoPay", "desc": "Klaim saldo GoPay Rp10.000! Upgrade GoPay Plus gratis sekarang", "url": "https://app.gopay.co.id/NF8p/m1hxthvj"},
-               {"icon": "fas fa-arrow-right-arrow-left", "name": "Flip", "desc": "Transfer gratis & top up e-wallet bebas biaya admin! Kode: QDNZ7900", "url": "https://flip.id/s/rqdnz7900"},
+               {"icon": "https://i.ibb.co.com/FbXf3fqx/flip.jpg", "name": "Flip", "desc": "Transfer gratis & top up e-wallet bebas biaya admin! Kode: QDNZ7900", "url": "https://flip.id/s/rqdnz7900"},
                {"icon": "https://i.ibb.co.com/hJ6qqZtS/wondr-bni-logo-png-seeklogo-632166.png", "name": "Wondr by BNI", "desc": "Promo ajak teman, Rp50 Juta & iPhone 17 Pro menanti!", "url": "https://app-wondr.bni.co.id/MIT4/qugxkwil"},
                {"icon": "fas fa-wallet", "name": "DANA", "desc": "Dompet digital untuk transaksi harian yang praktis", "url": "#"},
                {"icon": "fas fa-hand-holding-heart", "name": "OVO", "desc": "Cashback & pembayaran digital favorit Indonesia", "url": "#"},
