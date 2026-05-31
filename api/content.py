@@ -18,7 +18,7 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
     {"id": "forex", "icon": "💹", "title": "Forex & Trading", "desc": "Trading forex dengan platform terbaik",
      "links": [{"icon": "fas fa-rocket", "name": "Quick Pro", "desc": "Download Quick Pro now! Platform trading forex paling canggih", "url": "https://quickpro.go.link/i9bAl"}]},
     {"id": "belanja", "icon": "🛍️", "title": "Belanja Online", "desc": "Hemat setiap hari dari marketplace favorit",
-     "links": [{"icon": "fas fa-bag-shopping", "name": "Shopee", "desc": "Belanja hemat dengan promo & voucher eksklusif", "url": "#"},
+     "links": [{"icon": "fas fa-bag-shopping", "name": "Shopee", "desc": "Belanja hemat pakai link afiliasi! Kode tim: ZKDPCLV", "url": "https://s.shopee.co.id/5L9B2O2w2u"},
                {"icon": "fas fa-store", "name": "Tokopedia", "desc": "Marketplace lengkap kebutuhan harian Anda", "url": "#"},
                {"icon": "fas fa-box-open", "name": "Lazada", "desc": "Belanja online dengan harga terbaik setiap hari", "url": "#"}]},
     {"id": "keuangan", "icon": "🏦", "title": "Keuangan Digital", "desc": "Transaksi & pembayaran online lebih hemat",
