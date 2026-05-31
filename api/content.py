@@ -15,6 +15,8 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
                {"icon": "fas fa-money-bill-trend-up", "name": "BtcDana", "desc": "Mulai perjalanan menuju kekayaan! Kode undangan: AMBILBONUS", "url": "https://reg.btcdana.org/fx/indonesia/btcDana/activity_collection/register?data=eyJpbnZpdGVJZCI6IkFNQklMQk9OVVMiLCJhY3Rpdml0eUlkIjoiIiwidXNlclNvdXJjZSI6IiJ9"},
                {"icon": "fas fa-chart-simple", "name": "Social Trading", "desc": "Platform trading sosial terpercaya untuk hasil maksimal", "url": "https://social-trading.pro/a/3xskp6r8ju/?platform=mobile"},
                {"icon": "fas fa-globe", "name": "BMW Web", "desc": "Kode referral: CPA_005KZ21YMN. Gabung dan dapatkan benefit!", "url": "https://www.bmwweb.biz/activity/referral-entry/CPA?ref=CPA_005KZ21YMN&utm_medium=web_share_copy"}]},
+    {"id": "forex", "icon": "💹", "title": "Forex & Trading", "desc": "Trading forex dengan platform terbaik",
+     "links": [{"icon": "fas fa-rocket", "name": "Quick Pro", "desc": "Download Quick Pro now! Platform trading forex paling canggih", "url": "https://quickpro.go.link/i9bAl"}]},
     {"id": "belanja", "icon": "🛍️", "title": "Belanja Online", "desc": "Hemat setiap hari dari marketplace favorit",
      "links": [{"icon": "fas fa-bag-shopping", "name": "Shopee", "desc": "Belanja hemat dengan promo & voucher eksklusif", "url": "#"},
                {"icon": "fas fa-store", "name": "Tokopedia", "desc": "Marketplace lengkap kebutuhan harian Anda", "url": "#"},
