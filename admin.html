@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — FREDI SUSANTO BENGALON KUTIM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; min-height: 100vh; }
+.login { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
+.login-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; text-align: center; }
+.login-card h1 { font-size: 1.3rem; margin-bottom: 1.5rem; color: #f1f5f9; }
+.login-card input { width: 100%; padding: .85rem 1rem; border: 1px solid #334155; border-radius: 10px; background: #0f172a; color: #fff; font-size: .95rem; margin-bottom: 1rem; }
+.login-card input:focus { outline: none; border-color: #38bdf8; }
+.login-card button { width: 100%; padding: .85rem; border: none; border-radius: 10px; background: #38bdf8; color: #0a0a1a; font-weight: 600; font-size: .95rem; cursor: pointer; }
+.login-card button:hover { background: #7dd3fc; }
+.login-card .error { color: #f87171; font-size: .85rem; margin-top: .75rem; }
+.dashboard { display: none; padding: 1rem; max-width: 1200px; margin: auto; }
+.dash-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #334155; margin-bottom: 2rem; flex-wrap: wrap; gap: .5rem; }
+.dash-header h2 { font-size: 1.2rem; }
+.dash-header button { padding: .5rem 1rem; border: none; border-radius: 8px; background: #ef4444; color: #fff; cursor: pointer; font-size: .85rem; }
+.dash-header .save-btn { background: #22c55e; }
+.dash-header .save-btn:hover { background: #4ade80; }
+.section-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; }
+.section-card h3 { font-size: 1rem; margin-bottom: .25rem; display: flex; align-items: center; gap: .5rem; }
+.section-card .sec-desc { color: #64748b; font-size: .85rem; margin-bottom: 1rem; }
+.section-card input { width: 100%; padding: .6rem .85rem; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: #fff; font-size: .9rem; margin-bottom: .5rem; }
+.section-card input:focus { outline: none; border-color: #38bdf8; }
+.link-row { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: .85rem; margin-bottom: .6rem; }
+.link-row .link-fields { display: grid; gap: .4rem; grid-template-columns: 2fr 3fr 3fr; }
+.link-row input { font-size: .82rem; padding: .5rem .7rem; }
+.link-row .remove-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-size: .8rem; padding: .25rem 0; }
+.add-link-btn { background: none; border: 1px dashed #475569; border-radius: 8px; color: #94a3b8; padding: .6rem; width: 100%; cursor: pointer; font-size: .85rem; margin-top: .25rem; }
+.add-link-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+.toast { display: none; position: fixed; bottom: 2rem; right: 2rem; background: #22c55e; color: #0a0a1a; padding: .85rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: .9rem; }
+.loading { text-align: center; padding: 2rem; color: #64748b; }
+@media (max-width: 640px) { .link-row .link-fields { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="login" id="loginPage">
+  <div class="login-card">
+    <h1><i class="fas fa-lock" style="color:#38bdf8"></i> Admin Panel</h1>
+    <input type="password" id="passInput" placeholder="Masukkan password admin" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Masuk</button>
+    <div class="error" id="loginError"></div>
+  </div>
+</div>
+
+<div class="dashboard" id="dash">
+  <div class="dash-header">
+    <h2><i class="fas fa-pen-to-square" style="color:#38bdf8"></i> Edit Website</h2>
+    <div>
+      <button class="save-btn" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Simpan Semua</button>
+      <button onclick="logout()"><i class="fas fa-right-from-bracket"></i> Keluar</button>
+    </div>
+  </div>
+  <div id="editor"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let content = null;
+let password = "";
+
+async function login() {
+  password = document.getElementById("passInput").value;
+  const res = await fetch("/api/admin", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({action: "login", password})
+  });
+  if (res.ok) {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("dash").style.display = "block";
+    loadContent();
+  } else {
+    document.getElementById("loginError").textContent = "Password salah!";
+  }
+}
+
+function logout() {
+  password = "";
+  document.getElementById("loginPage").style.display = "flex";
+  document.getElementById("dash").style.display = "none";
+}
+
+async function loadContent() {
+  document.getElementById("editor").innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Memuat...</div>';
+  const res = await fetch("/api/admin");
+  const json = await res.json();
+  content = json.data;
+  renderEditor();
+}
+
+function renderEditor() {
+  let html = "";
+  for (const section of content.sections) {
+    html += `<div class="section-card" data-id="${section.id}">`;
+    html += `<h3><span class="sec-icon" contenteditable>${section.icon}</span> <span contenteditable class="sec-title">${section.title}</span></h3>`;
+    html += `<div class="sec-desc" contenteditable>${section.desc}</div>`;
+    html += `<div class="links-container">`;
+    for (let i = 0; i < section.links.length; i++) {
+      const link = section.links[i];
+      html += `<div class="link-row" data-i="${i}">
+        <div class="link-fields">
+          <input value="${link.icon}" placeholder="Icon" oninput="update(${section.id},${i},'icon',this.value)">
+          <input value="${link.name}" placeholder="Nama" oninput="update(${section.id},${i},'name',this.value)">
+          <input value="${link.url}" placeholder="URL" oninput="update(${section.id},${i},'url',this.value)">
+        </div>
+        <button class="remove-btn" onclick="removeLink('${section.id}',${i})"><i class="fas fa-trash-can"></i> Hapus</button>
+      </div>`;
+    }
+    html += `</div>`;
+    html += `<button class="add-link-btn" onclick="addLink('${section.id}')"><i class="fas fa-plus"></i> Tambah Link</button>`;
+    html += `</div>`;
+  }
+  document.getElementById("editor").innerHTML = html;
+}
+
+function update(sectionId, i, field, val) {
+  const s = content.sections.find(s => s.id === sectionId);
+  if (s && s.links[i]) s.links[i][field] = val;
+}
+
+function removeLink(sectionId, i) {
+  const s = content.sections.find(s => s.id === sectionId);
+  if (s) { s.links.splice(i, 1); renderEditor(); }
+}
+
+function addLink(sectionId) {
+  const s = content.sections.find(s => s.id === sectionId);
+  if (s) { s.links.push({icon: "fas fa-link", name: "Baru", desc: "Deskripsi", url: "#"}); renderEditor(); }
+}
+
+async function saveAll() {
+  const sections = content.sections;
+  for (const s of sections) {
+    const card = document.querySelector(`.section-card[data-id="${s.id}"]`);
+    if (card) {
+      s.icon = card.querySelector(".sec-icon")?.textContent?.trim() || s.icon;
+      s.title = card.querySelector(".sec-title")?.textContent?.trim() || s.title;
+      s.desc = card.querySelector(".sec-desc")?.textContent?.trim() || s.desc;
+    }
+  }
+  const res = await fetch("/api/admin", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({action: "save", password, content})
+  });
+  if (res.ok) toast("✅ Tersimpan! Vercel deploy ulang...");
+  else toast("❌ Gagal menyimpan");
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 3000);
+}
+</script>
+</body>
+</html>
