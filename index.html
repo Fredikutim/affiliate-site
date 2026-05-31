@@ -173,8 +173,12 @@ function renderAll(data) {
     footerHTML += `<a href="#${sid}">${s.icon || ""} ${label}</a>`;
     let linksHTML = "";
     for (const l of s.links || []) {
+      const ic = l.icon || 'fas fa-link';
+      const iconHtml = ic.startsWith('http') 
+        ? `<img src="${ic}" alt="" style="width:48px;height:48px;border-radius:12px;object-fit:cover;position:relative;z-index:1">`
+        : `<i class="${ic}" style="position:relative;z-index:1"></i>`;
       linksHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="card">
-        <i class="${l.icon || 'fas fa-link'}"></i>
+        ${iconHtml}
         <span class="card-title">${l.name || 'Link'}</span>
         <span class="card-desc">${l.desc || ''}</span>
       </a>`;
@@ -205,8 +209,12 @@ function renderAll(data) {
   }
 
   for (const l of featuredLinks.slice(0, 3)) {
+    const fic = l.icon || 'fas fa-link';
+    const fIconHtml = fic.startsWith('http')
+      ? `<img src="${fic}" alt="" style="width:28px;height:28px;border-radius:6px;object-fit:cover">`
+      : `<i class="${fic}"></i>`;
     featuredHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="featured-card">
-      <div class="fc-icon"><i class="${l.icon || 'fas fa-link'}"></i></div>
+      <div class="fc-icon">${fIconHtml}</div>
       <div class="fc-body">
         <span class="fc-tag">${l.sectionIcon || ""} ${l.sectionTitle || ""}</span>
         <span class="fc-title">${l.name || "Link"}</span>
