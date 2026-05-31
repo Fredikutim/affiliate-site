@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler
 
 KV_URL = os.environ.get("KV_REST_API_URL", "")
 KV_TOKEN = os.environ.get("KV_REST_API_TOKEN", "")
-ADMIN_PASS = os.environ.get("ADMIN_PASSWORD", "admin123")
+ADMIN_PASS = os.environ.get("ADMIN_PASSWORD", "fredi789")
 CONTENT_KEY = "site_content"
 
 class handler(BaseHTTPRequestHandler):
@@ -20,8 +20,8 @@ class handler(BaseHTTPRequestHandler):
         raw = self.rfile.read(length) if length > 0 else b""
         try:
             body = json.loads(raw.decode("utf-8"))
-        except Exception as e:
-            self.reply(400, {"ok": False, "error": f"Invalid JSON: {raw[:200]} / {str(e)}"})
+        except:
+            self.reply(400, {"ok": False, "error": "Invalid JSON"})
             return
         action = body.get("action")
         if action == "login":
