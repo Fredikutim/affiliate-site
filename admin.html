@@ -10,13 +10,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; min-height: 100vh; }
 .login { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
-.login-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; text-align: center; }
-.login-card h1 { font-size: 1.3rem; margin-bottom: 1.5rem; color: #f1f5f9; }
-.login-card input { width: 100%; padding: .85rem 1rem; border: 1px solid #334155; border-radius: 10px; background: #0f172a; color: #fff; font-size: .95rem; margin-bottom: 1rem; }
-.login-card input:focus { outline: none; border-color: #38bdf8; }
-.login-card button { width: 100%; padding: .85rem; border: none; border-radius: 10px; background: #38bdf8; color: #0a0a1a; font-weight: 600; font-size: .95rem; cursor: pointer; }
+.login-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 420px; text-align: center; }
+.login-card h1 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+.login-card input, .login-card textarea { width: 100%; padding: .85rem 1rem; border: 1px solid #334155; border-radius: 10px; background: #0f172a; color: #fff; font-size: .9rem; margin-bottom: 1rem; }
+.login-card input:focus, .login-card textarea:focus { outline: none; border-color: #38bdf8; }
+.login-card button { width: 100%; padding: .85rem; border: none; border-radius: 10px; background: #38bdf8; color: #0a0a1a; font-weight: 600; cursor: pointer; }
 .login-card button:hover { background: #7dd3fc; }
 .login-card .error { color: #f87171; font-size: .85rem; margin-top: .75rem; }
+.login-card .note { color: #64748b; font-size: .8rem; margin-top: .5rem; text-align: left; }
 .dashboard { display: none; padding: 1rem; max-width: 1200px; margin: auto; }
 .dash-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #334155; margin-bottom: 2rem; flex-wrap: wrap; gap: .5rem; }
 .dash-header h2 { font-size: 1.2rem; }
@@ -36,6 +37,23 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
 .add-link-btn:hover { border-color: #38bdf8; color: #38bdf8; }
 .toast { display: none; position: fixed; bottom: 2rem; right: 2rem; background: #22c55e; color: #0a0a1a; padding: .85rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: .9rem; }
 .loading { text-align: center; padding: 2rem; color: #64748b; }
+
+.ai-panel { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; }
+.ai-panel h3 { font-size: 1rem; margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+.ai-panel h3 span { color: #38bdf8; }
+.ai-chat { max-height: 300px; overflow-y: auto; margin-bottom: .75rem; display: flex; flex-direction: column; gap: .5rem; }
+.ai-msg { padding: .6rem .85rem; border-radius: 10px; font-size: .85rem; line-height: 1.5; }
+.ai-msg.user { background: #334155; align-self: flex-end; max-width: 80%; }
+.ai-msg.bot { background: #0f172a; align-self: flex-start; max-width: 80%; color: #94a3b8; }
+.ai-msg .label { font-weight: 600; font-size: .75rem; margin-bottom: .25rem; display: block; }
+.ai-msg.bot .label { color: #38bdf8; }
+.ai-msg.user .label { color: #a78bfa; }
+.ai-input-row { display: flex; gap: .5rem; }
+.ai-input-row input { flex: 1; padding: .6rem .85rem; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: #fff; font-size: .85rem; }
+.ai-input-row input:focus { outline: none; border-color: #38bdf8; }
+.ai-input-row button { padding: .6rem 1rem; border: none; border-radius: 8px; background: #38bdf8; color: #0a0a1a; font-weight: 600; cursor: pointer; font-size: .85rem; white-space: nowrap; }
+.ai-input-row button:disabled { opacity: .5; cursor: wait; }
+.ai-input-row .setup-btn { background: #a78bfa; }
 @media (max-width: 640px) { .link-row .link-fields { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -44,8 +62,14 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
 <div class="login" id="loginPage">
   <div class="login-card">
     <h1><i class="fas fa-lock" style="color:#38bdf8"></i> Admin Panel</h1>
-    <input type="password" id="passInput" placeholder="Masukkan password admin" onkeydown="if(event.key==='Enter')login()">
+    <input type="password" id="passInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">Masuk</button>
+    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #334155">
+      <p style="font-size:.85rem;color:#64748b;margin-bottom:.5rem">🔑 OpenRouter API Key (untuk AI asisten)</p>
+      <input type="password" id="aiKeyInput" placeholder="sk-or-v1-..." value="">
+      <button class="setup-btn" onclick="saveAiKey()">Simpan API Key</button>
+      <div class="note">Dapatkan key gratis di https://openrouter.ai/keys</div>
+    </div>
     <div class="error" id="loginError"></div>
   </div>
 </div>
@@ -58,6 +82,19 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
       <button onclick="logout()"><i class="fas fa-right-from-bracket"></i> Keluar</button>
     </div>
   </div>
+
+  <div class="ai-panel">
+    <h3><span>🤖</span> AI Asisten <span style="color:#64748b;font-weight:400;font-size:.8rem">— suruh AI isi link otomatis</span></h3>
+    <div class="ai-chat" id="aiChat">
+      <div class="ai-msg bot"><span class="label">AI</span>Halo! Saya bisa bantu isi link afiliasi. Contoh:<br>• "Tambah link Shopee https://shopee.co.id/ref/abc"<br>• "Ganti URL Ajaib jadi https://referral.ajaib.co.id/ZGpZ"<br>• "Hapus link Baru di Investasi"<br>• "Tambah link Traveloka urlnya https://t.ly/ref"</div>
+    </div>
+    <div class="ai-input-row">
+      <input id="aiInput" placeholder="Ketik perintah..." onkeydown="if(event.key==='Enter')askAI()">
+      <button class="setup-btn" onclick="setupAI()" id="aiSetupBtn">🔑 Set Key</button>
+      <button onclick="askAI()" id="aiSendBtn">Kirim</button>
+    </div>
+  </div>
+
   <div id="editor"></div>
 </div>
 
@@ -66,6 +103,15 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
 <script>
 let content = null;
 let password = "";
+let aiKey = localStorage.getItem("or_key") || "";
+
+document.getElementById("aiKeyInput").value = aiKey;
+
+function saveAiKey() {
+  aiKey = document.getElementById("aiKeyInput").value.trim();
+  localStorage.setItem("or_key", aiKey);
+  toast("✅ API Key tersimpan");
+}
 
 async function login() {
   password = document.getElementById("passInput").value;
@@ -77,6 +123,7 @@ async function login() {
     document.getElementById("loginPage").style.display = "none";
     document.getElementById("dash").style.display = "block";
     loadContent();
+    checkAiKey();
   } else {
     document.getElementById("loginError").textContent = "Password salah!";
   }
@@ -86,6 +133,16 @@ function logout() {
   password = "";
   document.getElementById("loginPage").style.display = "flex";
   document.getElementById("dash").style.display = "none";
+}
+
+function checkAiKey() {
+  document.getElementById("aiSetupBtn").textContent = aiKey ? "✅ Key siap" : "🔑 Set Key";
+}
+
+function setupAI() {
+  logout();
+  document.getElementById("aiKeyInput").focus();
+  toast("Masukkan OpenRouter API Key di halaman login");
 }
 
 async function loadContent() {
@@ -137,8 +194,7 @@ function addLink(sectionId) {
 }
 
 async function saveAll() {
-  const sections = content.sections;
-  for (const s of sections) {
+  for (const s of content.sections) {
     const card = document.querySelector(`.section-card[data-id="${s.id}"]`);
     if (card) {
       s.icon = card.querySelector(".sec-icon")?.textContent?.trim() || s.icon;
@@ -150,8 +206,72 @@ async function saveAll() {
     method: "POST", headers: {"Content-Type": "application/json"},
     body: JSON.stringify({action: "save", password, content})
   });
-  if (res.ok) toast("✅ Tersimpan! Vercel deploy ulang...");
+  if (res.ok) toast("✅ Tersimpan!");
   else toast("❌ Gagal menyimpan");
+}
+
+function addChat(msg, role) {
+  const chat = document.getElementById("aiChat");
+  const div = document.createElement("div");
+  div.className = `ai-msg ${role}`;
+  div.innerHTML = `<span class="label">${role === 'bot' ? 'AI' : 'Anda'}</span>${msg}`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function askAI() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+  if (!aiKey) { toast("❌ Set OpenRouter API Key dulu"); return; }
+  input.value = "";
+  addChat(msg, "user");
+  addChat("Memproses...", "bot");
+  document.getElementById("aiSendBtn").disabled = true;
+  const sysPrompt = `Anda adalah asisten admin website afiliasi. Saat ini konten website adalah JSON berikut:
+${JSON.stringify(content, null, 2)}
+
+User akan memberi perintah seperti:
+- "Tambah link [nama] [url]" → tambah link baru ke section yang cocok (cari berdasarkan kata kunci)
+- "Ganti URL [nama] jadi [url]" → update url link yang namanya cocok
+- "Hapus link [nama]" → hapus link berdasarkan nama
+- "Tambah link [nama] urlnya [url] di bagian [kategori]" → tambah di kategori tertentu
+
+Balas DENGAN JSON LENGKAP (hanya JSON, tanpa markdown, tanpa penjelasan) yang merupakan hasil modifikasi dari JSON di atas sesuai perintah user. Jangan ubah struktur atau data lain yang tidak disebut. Jika bingung, balas dengan ERROR: pesan error.`;
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {"Authorization": `Bearer ${aiKey}`, "Content-Type": "application/json",
+        "HTTP-Referer": "https://affiliate-site-opal.vercel.app", "X-Title": "Admin AI"},
+      body: JSON.stringify({
+        model: "openrouter/free",
+        messages: [
+          {role: "system", content: sysPrompt},
+          {role: "user", content: msg}
+        ],
+        max_tokens: 4000
+      })
+    });
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "ERROR: Tidak ada respons";
+    document.querySelector(".ai-msg.bot:last-child").remove();
+    if (reply.startsWith("ERROR:")) {
+      addChat(reply.replace("ERROR:", "").trim(), "bot");
+    } else {
+      try {
+        const updated = JSON.parse(reply.replace(/```json|```/g, "").trim());
+        content = updated;
+        renderEditor();
+        addChat("✅ Berhasil! Cek hasil edit di atas. Jangan lupa klik Simpan Semua.", "bot");
+      } catch {
+        addChat("Gagal parse JSON. Coba perintah lain.", "bot");
+      }
+    }
+  } catch (e) {
+    document.querySelector(".ai-msg.bot:last-child")?.remove();
+    addChat("Error: " + e.message, "bot");
+  }
+  document.getElementById("aiSendBtn").disabled = false;
 }
 
 function toast(msg) {
