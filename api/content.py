@@ -21,7 +21,7 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
                {"icon": "https://play-lh.googleusercontent.com/6CQfcfp68tooMc1-0vyLlCE0E2NpihXkHEIUYl5FHMJRUG76mdP3vyU-jh8GgcJR0Fs", "name": "Indodax", "desc": "Jual beli crypto terpercaya #1 di Indonesia. Daftar sekarang!", "url": "https://indodax.onelink.me/qyYY/referral?deep_link_value=page:register,id:fredisusanto"},
                {"icon": "fas fa-chart-simple", "name": "Social Trading", "desc": "Platform trading sosial terpercaya untuk hasil maksimal", "url": "https://social-trading.pro/a/3xskp6r8ju/?platform=mobile"}]},
     {"id": "belanja", "icon": "🛍️", "title": "Belanja Online", "desc": "Hemat setiap hari dari marketplace favorit",
-     "links": [{"icon": "fas fa-bag-shopping", "name": "Shopee", "desc": "Belanja hemat pakai link afiliasi! Kode tim: ZKDPCLV", "url": "https://s.shopee.co.id/5L9B2O2w2u"},
+     "links": [{"icon": "https://i.ibb.co.com/8gMVt4yh/shopee.png", "name": "Shopee", "desc": "Belanja hemat pakai link afiliasi! Kode tim: ZKDPCLV", "url": "https://s.shopee.co.id/5L9B2O2w2u"},
                {"icon": "fas fa-store", "name": "Tokopedia", "desc": "Marketplace lengkap kebutuhan harian Anda", "url": "#"},
                {"icon": "fas fa-box-open", "name": "Lazada", "desc": "Belanja online dengan harga terbaik setiap hari", "url": "#"}]},
     {"id": "keuangan", "icon": "🏦", "title": "Keuangan Digital", "desc": "Transaksi & pembayaran online lebih hemat",
