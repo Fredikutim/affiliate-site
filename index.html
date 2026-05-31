@@ -45,8 +45,9 @@
     .profile-details i { color: #38bdf8; width: 24px; text-align: center; font-size: 1.2rem; }
     @media (max-width: 768px) { 
       .profile-container { flex-direction: column; text-align: center; padding: 2.5rem 1.5rem; } 
-      .profile-details { align-items: center; }
-      .profile-details span { justify-content: flex-start; text-align: left; } 
+      .profile-details { align-items: stretch; }
+      .profile-details span:nth-child(-n+2) { justify-content: flex-start; text-align: left; }
+      .profile-details span:nth-child(n+3) { justify-content: center; }
     }
   </style>
 </head>
@@ -86,9 +87,9 @@
         <p class="subtitle">Tech Enthusiast, AI Developer & Affiliate Marketer</p>
         <p class="bio">Halo! Saya mendedikasikan platform ini untuk membantu Anda menemukan alat (*tools*), platform investasi terpercaya, dan promo e-commerce terbaik. Selain dunia trading dan finansial, saya juga aktif mengembangkan solusi kecerdasan buatan (AI) yang dirancang untuk mempermudah pekerjaan digital sehari-hari.</p>
         <div class="profile-details">
-           <span><i class="fas fa-map-marker-alt"></i> Bengalon, Kutai Timur, Kalimantan Timur</span>
+           <span><i class="fas fa-map-marker-alt"></i> Bengalon, Kutai Timur, KalTim</span>
+           <span><i class="fas fa-envelope"></i> fredisusanto@gmail.com</span>
            <span><i class="fas fa-robot"></i> Kreator @vefredy_bot & Fredi AI Manager</span>
-           <span><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</span>
            <span><i class="fab fa-tiktok"></i> @fredy_susanta</span>
            <span><i class="fab fa-instagram"></i> @fredy.trade</span>
            <span><i class="fab fa-threads"></i> @fredy.trade</span>
