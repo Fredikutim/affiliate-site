@@ -5,17 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kumpulan link afiliasi terpercaya FREDI SUSANTO BENGALON KUTIM — Investasi, Crypto, Belanja, Travel, Teknologi & Keuangan">
   <meta name="keywords" content="afiliasi, investasi, saham, crypto, binance, indodax, ajaib, shopee, traveloka, openrouter">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="og:title" content="FREDI SUSANTO BENGALON KUTIM — Link Afiliasi Terpercaya">
+  <meta name="og:description" content="Kumpulan link afiliasi terpercaya untuk memulai investasi, belanja hemat, perjalanan, dan teknologi">
+  <meta name="og:image" content="https://via.placeholder.com/1200x630?text=Fredi+Affiliate">
   <title>FREDI SUSANTO BENGALON KUTIM — Link Afiliasi Terpercaya</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🔗</text></svg>">
 </head>
 <body>
-
-  <nav>
+  <!-- Navigation -->
+  <nav class="navbar">
     <div class="nav-inner">
-      <span class="logo">FREDI SUSANTO BENGALON KUTIM</span>
+      <a href="#" class="logo">
+        <i class="fas fa-link"></i>
+        <span>FREDI SUSANTO BENGALON KUTIM</span>
+      </a>
       <div class="nav-links">
         <a href="#investasi">Investasi</a>
         <a href="#crypto">Crypto</a>
@@ -23,10 +32,19 @@
         <a href="#travel">Travel</a>
         <a href="#teknologi">Teknologi</a>
         <a href="#keuangan">Keuangan</a>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1>Solusi Bisnis & Investasi<br><span>Terpercaya</span></h1>
@@ -39,175 +57,267 @@
         <span>🤖 AI</span>
         <span>🏦 Keuangan</span>
       </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="document.getElementById('investasi').scrollIntoView({behavior: 'smooth'})">
+          Mulai Sekarang
+        </button>
+        <button class="btn btn-secondary" onclick="document.getElementById('keuangan').scrollIntoView({behavior: 'smooth'})">
+          Pelajari Lebih Lanjut
+        </button>
+      </div>
+    </div>
+    <div class="hero-decoration">
+      <div class="floating-shape"></div>
+      <div class="floating-shape"></div>
+      <div class="floating-shape"></div>
     </div>
   </section>
 
+  <!-- Main Content -->
   <main>
-    <section id="investasi">
+    <!-- Investasi Section -->
+    <section id="investasi" class="section">
       <div class="section-header">
         <h2>💰 Investasi &amp; Saham</h2>
         <p>Mulai investasi dengan platform terpercaya</p>
       </div>
       <div class="links">
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-chart-line"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="investasi">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
           <span class="card-title">Ajaib</span>
           <span class="card-desc">Beli saham online mudah &amp; aman</span>
+          <span class="card-badge">Investasi</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-landmark"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="investasi">
+          <div class="card-icon">
+            <i class="fas fa-landmark"></i>
+          </div>
           <span class="card-title">Indodax</span>
           <span class="card-desc">Jual beli aset crypto terbesar di Indonesia</span>
+          <span class="card-badge">Investasi</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-coins"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="investasi">
+          <div class="card-icon">
+            <i class="fas fa-coins"></i>
+          </div>
           <span class="card-title">Binance</span>
           <span class="card-desc">Exchange crypto global terdepan</span>
+          <span class="card-badge">Investasi</span>
         </a>
       </div>
     </section>
 
-    <section id="crypto">
+    <!-- Crypto Section -->
+    <section id="crypto" class="section">
       <div class="section-header">
         <h2>₿ Crypto &amp; Aset Digital</h2>
         <p>Dunia kripto dalam genggaman</p>
       </div>
       <div class="links">
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-coins"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="crypto">
+          <div class="card-icon">
+            <i class="fas fa-coins"></i>
+          </div>
           <span class="card-title">Binance</span>
           <span class="card-desc">Beli, jual &amp; trading crypto</span>
+          <span class="card-badge">Crypto</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-indonesian-rupiah-sign"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="crypto">
+          <div class="card-icon">
+            <i class="fas fa-indonesian-rupiah-sign"></i>
+          </div>
           <span class="card-title">Indodax</span>
           <span class="card-desc">Platform crypto #1 Indonesia</span>
+          <span class="card-badge">Crypto</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-chart-simple"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="crypto">
+          <div class="card-icon">
+            <i class="fas fa-chart-simple"></i>
+          </div>
           <span class="card-title">Ajaib Saham</span>
           <span class="card-desc">Investasi saham &amp; reksadana</span>
+          <span class="card-badge">Crypto</span>
         </a>
       </div>
     </section>
 
-    <section id="belanja">
+    <!-- Belanja Section -->
+    <section id="belanja" class="section">
       <div class="section-header">
         <h2>🛍️ Belanja Online</h2>
         <p>Hemat setiap hari dari marketplace favorit</p>
       </div>
       <div class="links">
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-bag-shopping"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="belanja">
+          <div class="card-icon">
+            <i class="fas fa-bag-shopping"></i>
+          </div>
           <span class="card-title">Shopee</span>
           <span class="card-desc">Belanja hemat dengan promo &amp; voucher</span>
+          <span class="card-badge">Belanja</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-store"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="belanja">
+          <div class="card-icon">
+            <i class="fas fa-store"></i>
+          </div>
           <span class="card-title">Tokopedia</span>
           <span class="card-desc">Marketplace lengkap kebutuhan harian</span>
+          <span class="card-badge">Belanja</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-box-open"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="belanja">
+          <div class="card-icon">
+            <i class="fas fa-box-open"></i>
+          </div>
           <span class="card-title">Lazada</span>
           <span class="card-desc">Belanja online dengan harga terbaik</span>
+          <span class="card-badge">Belanja</span>
         </a>
       </div>
     </section>
 
-    <section id="travel">
+    <!-- Travel Section -->
+    <section id="travel" class="section">
       <div class="section-header">
         <h2>✈️ Travel &amp; Akomodasi</h2>
         <p>Rencanakan perjalanan Anda</p>
       </div>
       <div class="links">
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-plane"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="travel">
+          <div class="card-icon">
+            <i class="fas fa-plane"></i>
+          </div>
           <span class="card-title">Traveloka</span>
           <span class="card-desc">Pesan tiket pesawat, hotel &amp; aktivitas</span>
+          <span class="card-badge">Travel</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-hotel"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="travel">
+          <div class="card-icon">
+            <i class="fas fa-hotel"></i>
+          </div>
           <span class="card-title">Agoda</span>
           <span class="card-desc">Booking hotel murah di seluruh dunia</span>
+          <span class="card-badge">Travel</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-ticket"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="travel">
+          <div class="card-icon">
+            <i class="fas fa-ticket"></i>
+          </div>
           <span class="card-title">Tiket.com</span>
           <span class="card-desc">Travel partner for every journey</span>
+          <span class="card-badge">Travel</span>
         </a>
       </div>
     </section>
 
-    <section id="teknologi">
+    <!-- Teknologi Section -->
+    <section id="teknologi" class="section">
       <div class="section-header">
         <h2>🤖 Teknologi &amp; AI</h2>
         <p>Inovasi digital untuk bisnis Anda</p>
       </div>
       <div class="links">
-        <a href="https://openrouter.ai" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-brain"></i>
+        <a href="https://openrouter.ai" target="_blank" rel="noopener" class="card" data-category="teknologi">
+          <div class="card-icon">
+            <i class="fas fa-brain"></i>
+          </div>
           <span class="card-title">OpenRouter</span>
           <span class="card-desc">Akses berbagai model AI gratis &amp; berbayar</span>
+          <span class="card-badge">AI</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-microchip"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="teknologi">
+          <div class="card-icon">
+            <i class="fas fa-microchip"></i>
+          </div>
           <span class="card-title">OpenAI</span>
           <span class="card-desc">ChatGPT, GPT-4, DALL-E &amp; lainnya</span>
+          <span class="card-badge">AI</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-robot"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="teknologi">
+          <div class="card-icon">
+            <i class="fas fa-robot"></i>
+          </div>
           <span class="card-title">Claude AI</span>
           <span class="card-desc">AI assistant canggih dari Anthropic</span>
+          <span class="card-badge">AI</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-globe"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="teknologi">
+          <div class="card-icon">
+            <i class="fas fa-globe"></i>
+          </div>
           <span class="card-title">IDwebhost</span>
           <span class="card-desc">Hosting &amp; domain murah Indonesia</span>
+          <span class="card-badge">Hosting</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-server"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="teknologi">
+          <div class="card-icon">
+            <i class="fas fa-server"></i>
+          </div>
           <span class="card-title">Niagahoster</span>
           <span class="card-desc">Hosting terbaik untuk website Anda</span>
+          <span class="card-badge">Hosting</span>
         </a>
       </div>
     </section>
 
-    <section id="keuangan">
+    <!-- Keuangan Section -->
+    <section id="keuangan" class="section">
       <div class="section-header">
         <h2>🏦 Keuangan Digital</h2>
         <p>Transaksi &amp; pembayaran online</p>
       </div>
       <div class="links">
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-wallet"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="keuangan">
+          <div class="card-icon">
+            <i class="fas fa-wallet"></i>
+          </div>
           <span class="card-title">DANA</span>
           <span class="card-desc">Dompet digital untuk transaksi harian</span>
+          <span class="card-badge">Fintech</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-credit-card"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="keuangan">
+          <div class="card-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
           <span class="card-title">GoPay</span>
           <span class="card-desc">Bayar online dengan GoPay</span>
+          <span class="card-badge">Fintech</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-hand-holding-heart"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="keuangan">
+          <div class="card-icon">
+            <i class="fas fa-hand-holding-heart"></i>
+          </div>
           <span class="card-title">OVO</span>
           <span class="card-desc">Cashback &amp; pembayaran digital</span>
+          <span class="card-badge">Fintech</span>
         </a>
-        <a href="#" target="_blank" rel="noopener" class="card">
-          <i class="fas fa-link"></i>
+        <a href="#" target="_blank" rel="noopener" class="card" data-category="keuangan">
+          <div class="card-icon">
+            <i class="fas fa-link"></i>
+          </div>
           <span class="card-title">LinkAja</span>
           <span class="card-desc">Keuangan digital dari BUMN</span>
+          <span class="card-badge">Fintech</span>
         </a>
       </div>
     </section>
   </main>
 
-  <footer>
+  <!-- Footer -->
+  <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
         <h3>FREDI SUSANTO BENGALON KUTIM</h3>
         <p>Kumpulan link afiliasi terpercaya untuk membantu Anda memulai.</p>
+        <div class="footer-social">
+          <a href="https://t.me/fredi_bot" target="_blank" rel="noopener" title="Telegram">
+            <i class="fab fa-telegram"></i>
+          </a>
+          <a href="mailto:fredisusantokutim@gmail.com" title="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
       </div>
       <div class="footer-links">
         <h4>Kategori</h4>
@@ -220,14 +330,111 @@
       </div>
       <div class="footer-contact">
         <h4>Kontak</h4>
-        <p><i class="fab fa-telegram"></i> @fredi_bot</p>
-        <p><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</p>
+        <p><a href="https://t.me/fredi_bot" target="_blank" rel="noopener"><i class="fab fa-telegram"></i> @fredi_bot</a></p>
+        <p><a href="mailto:fredisusantokutim@gmail.com"><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</a></p>
       </div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 FREDI SUSANTO BENGALON KUTIM. Beberapa link merupakan link afiliasi.</p>
+      <div class="footer-credits">
+        <span>Made with <i class="fas fa-heart"></i> by Fredi</span>
+      </div>
     </div>
   </footer>
 
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTop" class="scroll-to-top" title="Kembali ke atas">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    });
+
+    // Close menu when link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        menuToggle.classList.remove('active');
+      });
+    });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme or default to 'light'
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const theme = htmlElement.getAttribute('data-theme');
+      const newTheme = theme === 'light' ? 'dark' : 'light';
+      
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+    
+    function updateThemeIcon(theme) {
+      const icon = themeToggle.querySelector('i');
+      icon.className = theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Scroll to Top Button
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+    
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.card, .section-header').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
