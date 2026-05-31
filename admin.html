@@ -65,10 +65,10 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
     <input type="password" id="passInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">Masuk</button>
     <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #334155">
-      <p style="font-size:.85rem;color:#64748b;margin-bottom:.5rem">🔑 OpenRouter API Key (untuk AI asisten)</p>
-      <input type="password" id="aiKeyInput" placeholder="sk-or-v1-..." value="">
+      <p style="font-size:.85rem;color:#64748b;margin-bottom:.5rem">🔑 OpenRouter API Key (untuk AI Manager)</p>
+      <input type="password" id="aiKeyInput" placeholder="sk-or-v1-...">
       <button class="setup-btn" onclick="saveAiKey()">Simpan API Key</button>
-      <div class="note">Dapatkan key gratis di https://openrouter.ai/keys</div>
+      <div class="note">Masukin sekali, tersimpan otomatis di browser</div>
     </div>
     <div class="error" id="loginError"></div>
   </div>
@@ -77,7 +77,8 @@ body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #e2e8f0; mi
 <div class="dashboard" id="dash">
   <div class="dash-header">
     <h2><i class="fas fa-pen-to-square" style="color:#38bdf8"></i> Edit Website</h2>
-    <div>
+    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <span id="aiKeyStatus" style="font-size:.75rem;color:#64748b;cursor:pointer" onclick="changeKey()" title="Klik ganti API Key">🔑 <span id="aiKeyLabel">set key</span></span>
       <button class="save-btn" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Simpan Semua</button>
       <button onclick="logout()"><i class="fas fa-right-from-bracket"></i> Keluar</button>
     </div>
@@ -110,7 +111,8 @@ document.getElementById("aiKeyInput").value = aiKey;
 function saveAiKey() {
   aiKey = document.getElementById("aiKeyInput").value.trim();
   localStorage.setItem("or_key", aiKey);
-  toast("✅ API Key tersimpan");
+  checkAiKey();
+  toast("✅ API Key tersimpan — silakan login");
 }
 
 async function login() {
@@ -137,12 +139,24 @@ function logout() {
 
 function checkAiKey() {
   document.getElementById("aiSetupBtn").textContent = aiKey ? "✅ Key siap" : "🔑 Set Key";
+  const lbl = document.getElementById("aiKeyLabel");
+  if (aiKey) lbl.textContent = aiKey.slice(0,12) + "..." + aiKey.slice(-4);
+  else lbl.textContent = "belum diset";
 }
 
 function setupAI() {
   logout();
   document.getElementById("aiKeyInput").focus();
-  toast("Masukkan OpenRouter API Key di halaman login");
+}
+
+function changeKey() {
+  const newKey = prompt("Masukkan OpenRouter API Key baru:", aiKey);
+  if (newKey && newKey.trim()) {
+    aiKey = newKey.trim();
+    localStorage.setItem("or_key", aiKey);
+    checkAiKey();
+    toast("🔑 API Key diperbarui");
+  }
 }
 
 async function loadContent() {
