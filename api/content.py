@@ -8,7 +8,7 @@ CONTENT_KEY = "site_content"
 DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "Modern & Terpercaya", "subtitle": "Kumpulan link afiliasi pilihan FREDI SUSANTO BENGALON KUTIM untuk investasi, crypto, belanja, travel, teknologi, dan keuangan digital."}, "sections": [
     {"id": "investasi", "icon": "💰", "title": "Investasi & Saham", "desc": "Mulai investasi dengan platform terpercaya",
      "links": [{"icon": "https://events.rumah123.com/wp-content/uploads/sites/41/2024/07/09091711/aplikasi-investasi-saham-terbaik-indonesia-ajaib.jpg", "name": "Ajaib", "desc": "Investasi & trading saham #1. Daftar pakai kode fred9092961423 dapat 1 lot saham!", "url": "https://referral.ajaib.co.id/ZGpZ"},
-               {"icon": "fas fa-university", "name": "Wondr by BNI", "desc": "Promo ajak teman, Rp50 Juta & iPhone 17 Pro menanti!", "url": "https://app-wondr.bni.co.id/MIT4/qugxkwil"},
+               {"icon": "https://i.ibb.co.com/hJ6qqZtS/wondr-bni-logo-png-seeklogo-632166.png", "name": "Wondr by BNI", "desc": "Promo ajak teman, Rp50 Juta & iPhone 17 Pro menanti!", "url": "https://app-wondr.bni.co.id/MIT4/qugxkwil"},
                {"icon": "https://i.ibb.co.com/R4YX4ykb/thumbnail-bibit.jpg", "name": "Bibit", "desc": "Cashback reksa dana Rp25.000. Pakai kode referral fredi10", "url": "https://linkto.bibit.id/SJpp/referralbibit"}]},
     {"id": "crypto", "icon": "₿", "title": "Crypto & Aset Digital", "desc": "Jual beli crypto dan aset digital terpercaya",
      "links": [{"icon": "https://i.ibb.co.com/dssg6MBC/binance.jpg", "name": "Binance", "desc": "Kode referral: CPA_005KZ21YMN. Exchange crypto & trading global terbesar!", "url": "https://www.bmwweb.biz/id/activity/referral-entry/CPA?ref=CPA_005KZ21YMN&utm_medium=web_share_copy"},
