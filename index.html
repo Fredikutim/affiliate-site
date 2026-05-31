@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kumpulan link afiliasi terpercaya FREDI SUSANTO BENGALON KUTIM">
-  <title>FREDI SUSANTO BENGALON KUTIM — Link Afiliasi</title>
+  <title>FREDI SUSANTO BENGALON KUTIM</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -14,21 +14,14 @@
   <nav>
     <div class="nav-inner">
       <span class="logo">FREDI SUSANTO BENGALON KUTIM</span>
-      <div class="nav-links" id="navLinks">
-        <a href="#investasi">Investasi</a>
-        <a href="#crypto">Crypto</a>
-        <a href="#belanja">Belanja</a>
-        <a href="#travel">Travel</a>
-        <a href="#teknologi">Teknologi</a>
-        <a href="#keuangan">Keuangan</a>
-      </div>
+      <div class="nav-links" id="navLinks"></div>
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero" id="heroSection">
     <div class="hero-content">
-      <h1>Solusi Bisnis &amp; Investasi<br><span>Terpercaya</span></h1>
-      <p>Kumpulan link afiliasi terpercaya untuk investasi, belanja hemat, perjalanan, dan teknologi.</p>
+      <h1 id="heroTitle">Solusi Bisnis &amp; Investasi<br><span>Terpercaya</span></h1>
+      <p id="heroSub">Kumpulan link afiliasi terpercaya untuk investasi, belanja, perjalanan, dan teknologi.</p>
       <div class="hero-categories" id="heroCats"></div>
     </div>
   </section>
@@ -60,42 +53,53 @@
 async function loadContent() {
   try {
     const res = await fetch("/api/content");
-    const data = (await res.json()).sections || [];
-    render(data);
+    const data = await res.json();
+    renderAll(data);
   } catch { renderFallback(); }
 }
 
-function render(sections) {
-  const main = document.getElementById("mainContent");
+function renderAll(data) {
+  const hero = data.hero || {};
+  const sections = data.sections || [];
+  document.getElementById("heroTitle").innerHTML = (hero.title || "Solusi Bisnis & Investasi") + "<br><span>" + (hero.highlight || "Terpercaya") + "</span>";
+  document.getElementById("heroSub").textContent = hero.subtitle || "Kumpulan link afiliasi terpercaya.";
+  const navLinks = document.getElementById("navLinks");
   const heroCats = document.getElementById("heroCats");
   const footerNav = document.getElementById("footerNav");
-  const navLinks = document.getElementById("navLinks");
-  let mainHTML = "", heroHTML = "", footerHTML = "", navHTML = "";
-
+  const main = document.getElementById("mainContent");
+  let navHTML = "", heroHTML = "", mainHTML = "", footerHTML = "";
   for (const s of sections) {
-    const sid = s.id || s.title.toLowerCase().replace(/\s+/g, "");
-    navHTML += `<a href="#${sid}">${s.title.split(" ").pop()}</a>`;
-    heroHTML += `<span>${s.icon} ${s.title.split(" ").pop()}</span>`;
+    const sid = s.id || s.title?.toLowerCase().replace(/\s+/g, "") || "section-" + Math.random().toString(36).slice(2,6);
+    if (s.type === "custom") {
+      mainHTML += `<section id="${sid}" class="custom-section">${s.html || ""}</section>`;
+      continue;
+    }
+    const label = s.title?.split(" ").pop() || s.icon || sid;
+    navHTML += `<a href="#${sid}">${label}</a>`;
+    heroHTML += `<span>${s.icon || ""} ${label}</span>`;
+    footerHTML += `<a href="#${sid}">${s.icon || ""} ${label}</a>`;
     let linksHTML = "";
     for (const l of s.links || []) {
       linksHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="card">
-        <i class="${l.icon}"></i>
-        <span class="card-title">${l.name}</span>
-        <span class="card-desc">${l.desc}</span>
+        <i class="${l.icon || 'fas fa-link'}"></i>
+        <span class="card-title">${l.name || 'Link'}</span>
+        <span class="card-desc">${l.desc || ''}</span>
       </a>`;
     }
-    mainHTML += `<section id="${sid}">
-      <div class="section-header">
-        <h2>${s.icon} ${s.title}</h2>
-        <p>${s.desc}</p>
-      </div>
-      <div class="links">${linksHTML}</div>
-    </section>`;
+    if (linksHTML) {
+      mainHTML += `<section id="${sid}">
+        <div class="section-header">
+          <h2>${s.icon || ""} ${s.title || ""}</h2>
+          ${s.desc ? `<p>${s.desc}</p>` : ""}
+        </div>
+        <div class="links">${linksHTML}</div>
+      </section>`;
+    }
   }
-  navLinks.innerHTML = navHTML;
-  heroCats.innerHTML = heroHTML;
-  main.innerHTML = mainHTML;
-  footerNav.innerHTML = sections.map(s => `<a href="#${s.id}">${s.icon} ${s.title.split(" ").pop()}</a>`).join("");
+  navLinks.innerHTML = navHTML || '<a href="#">Beranda</a>';
+  heroCats.innerHTML = heroHTML || "";
+  main.innerHTML = mainHTML || "<p style='text-align:center;padding:2rem;color:#64748b'>Konten belum tersedia.</p>";
+  footerNav.innerHTML = footerHTML || "";
 }
 
 function renderFallback() {

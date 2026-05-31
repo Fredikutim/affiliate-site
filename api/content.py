@@ -5,7 +5,7 @@ KV_URL = os.environ.get("KV_REST_API_URL", "")
 KV_TOKEN = os.environ.get("KV_REST_API_TOKEN", "")
 CONTENT_KEY = "site_content"
 
-DEFAULT = {"sections": [
+DEFAULT = {"hero": {"title": "Solusi Bisnis & Investasi", "highlight": "Terpercaya", "subtitle": "Kumpulan link afiliasi terpercaya untuk investasi, belanja, perjalanan, dan teknologi."}, "sections": [
     {"id": "investasi", "icon": "💰", "title": "Investasi & Saham", "desc": "Mulai investasi dengan platform terpercaya",
      "links": [{"icon": "fas fa-chart-line", "name": "Ajaib", "desc": "Beli saham online mudah & aman", "url": "#"},
                {"icon": "fas fa-landmark", "name": "Indodax", "desc": "Jual beli aset crypto terbesar", "url": "#"},
