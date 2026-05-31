@@ -12,9 +12,10 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            raw = self.rfile.read(int(self.headers.get("Content-Length", 0)))
+            length = int(self.headers.get("content-length", 0))
+            raw = self.rfile.read(length) if length > 0 else self.rfile.read()
             body = json.loads(raw.decode("utf-8"))
-        except:
+        except Exception:
             self._respond(400, {"ok": False, "error": "Invalid JSON"})
             return
         action = body.get("action", "")
