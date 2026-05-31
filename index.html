@@ -185,11 +185,36 @@ function renderAll(data) {
       const iconHtml = ic.startsWith('http') 
         ? `<img src="${ic}" alt="" style="width:48px;height:48px;border-radius:12px;object-fit:cover;position:relative;z-index:1">`
         : `<i class="${ic}" style="position:relative;z-index:1"></i>`;
-      linksHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="card">
-        ${iconHtml}
-        <span class="card-title">${l.name || 'Link'}</span>
-        <span class="card-desc">${l.desc || ''}</span>
-      </a>`;
+      const subs = l.subs || [];
+      let subHtml = "";
+      if (subs.length) {
+        for (const sub of subs) {
+          const sic = sub.icon || 'fas fa-link';
+          const sIconHtml = sic.startsWith('http')
+            ? `<img src="${sic}" alt="" style="width:32px;height:32px;border-radius:8px;object-fit:cover">`
+            : `<i class="${sic}" style="font-size:1rem"></i>`;
+          subHtml += `<a href="${sub.url}" target="_blank" rel="noopener" class="sub-card">
+            ${sIconHtml}
+            <span class="sub-card-title">${sub.name || 'Link'}</span>
+            <span class="sub-card-desc">${sub.desc || ''}</span>
+          </a>`;
+        }
+        linksHTML += `<div class="card card-parent" onclick="this.classList.toggle('open')">
+          <div class="card-main">
+            ${iconHtml}
+            <span class="card-title">${l.name || 'Link'}</span>
+            <span class="card-desc">${l.desc || ''}</span>
+            <span class="card-toggle"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="card-subs">${subHtml}</div>
+        </div>`;
+      } else {
+        linksHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="card">
+          ${iconHtml}
+          <span class="card-title">${l.name || 'Link'}</span>
+          <span class="card-desc">${l.desc || ''}</span>
+        </a>`;
+      }
       if (FEATURED_IDS.includes(sid) || FEATURED_IDS.includes(l.name?.toLowerCase().replace(/\s+/g, ""))) {
         featuredLinks.push({ ...l, sectionIcon: s.icon, sectionTitle: s.title });
       }

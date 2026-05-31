@@ -38,8 +38,7 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
     {"id": "teknologi", "icon": "🤖", "title": "Teknologi & AI", "desc": "Inovasi digital untuk bisnis Anda",
      "links": [{"icon": "fas fa-brain", "name": "OpenRouter", "desc": "Akses berbagai model AI gratis & berbayar", "url": "https://openrouter.ai"},
                {"icon": "fas fa-microchip", "name": "OpenAI", "desc": "ChatGPT, GPT-4, DALL-E & lainnya", "url": "#"},
-               {"icon": "fas fa-globe", "name": "IDwebhost", "desc": "Hosting & domain murah Indonesia", "url": "#"},
-               {"icon": "fas fa-rocket", "name": "Genfity", "desc": "Mau bisnis Anda terlihat lebih profesional dan dipercaya pelanggan? Saatnya beralih ke ekosistem digital bersama Genfity. Kami hadir sebagai mitra terpercaya untuk membangun masa depan digital bisnis Anda✨ Layanan Unggulan Kami: Web Development, Custom Enterprise Software, Genfity AI Gateway, WhatsApp API & Otomatisasi. Mulai transformasi digital Anda sekarang!", "url": "https://genfity.com/signup?ref=DAFTARGRATIS"},
+               {"icon": "fas fa-globe", "name": "IDwebhost", "desc": "Hosting & domain murah Indonesia", "url": "#", "subs": [{"icon": "fas fa-rocket", "name": "Genfity", "desc": "Mau bisnis Anda terlihat lebih profesional dan dipercaya pelanggan? Saatnya beralih ke ekosistem digital bersama Genfity. Kami hadir sebagai mitra terpercaya untuk membangun masa depan digital bisnis Anda✨ Layanan Unggulan Kami: Web Development, Custom Enterprise Software, Genfity AI Gateway, WhatsApp API & Otomatisasi. Mulai transformasi digital Anda sekarang!", "url": "https://genfity.com/signup?ref=DAFTARGRATIS"}]},
                {"icon": "fas fa-server", "name": "Niagahoster", "desc": "Hosting terbaik untuk website Anda", "url": "#"}]}
 ]}
 

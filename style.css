@@ -140,6 +140,22 @@ section:target { scroll-margin-top: 80px; }
 .card-title { font-weight: 600; font-size: 1.05rem; position: relative; z-index: 1; }
 .card-desc { font-size: .85rem; color: #64748b; position: relative; z-index: 1; }
 
+.card-parent { padding: 0; overflow: visible; cursor: pointer; }
+.card-main { display: flex; flex-direction: column; gap: .5rem; padding: 1.5rem; position: relative; }
+.card-toggle { position: absolute; top: 1rem; right: 1rem; color: #64748b; transition: transform .3s; z-index: 2; }
+.card-parent.open .card-toggle { transform: rotate(180deg); }
+.card-subs { display: none; flex-direction: column; gap: .5rem; padding: 0 1rem 1rem; border-top: 1px solid rgba(255,255,255,.06); padding-top: .75rem; }
+.card-parent.open .card-subs { display: flex; }
+.sub-card {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem; border-radius: 12px;
+  background: rgba(15,23,42,.5); border: 1px solid rgba(255,255,255,.04);
+  text-decoration: none; color: #e2e8f0; transition: all .2s;
+}
+.sub-card:hover { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.15); transform: translateX(4px); }
+.sub-card-title { font-weight: 500; font-size: .9rem; }
+.sub-card-desc { font-size: .78rem; color: #64748b; }
+
 footer {
   background: #0d0d24; border-top: 1px solid rgba(255,255,255,.06);
   padding: 3rem 1.5rem 1.5rem;
