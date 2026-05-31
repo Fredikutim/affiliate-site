@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kumpulan link afiliasi terpercaya FREDI SUSANTO BENGALON KUTIM">
-  <title>FREDI SUSANTO BENGALON KUTIM</title>
+  <meta name="description" content="Kumpulan link afiliasi & portofolio Fredi Susanto — Investasi, Crypto, Forex, Belanja, Teknologi">
+  <title>Fredi Susanto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -13,17 +13,34 @@
 <body>
   <nav>
     <div class="nav-inner">
-      <span class="logo">FREDI SUSANTO BENGALON KUTIM</span>
-      <div class="nav-links" id="navLinks"></div>
+      <a href="/" class="logo">Fredi Susanto</a>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Beranda</a>
+        <a href="/portfolio">Portofolio</a>
+      </div>
     </div>
   </nav>
 
   <section class="hero" id="heroSection">
+    <div class="hero-visual">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
     <div class="hero-content">
       <h1 id="heroTitle">Solusi Bisnis &amp; Investasi<br><span>Terpercaya</span></h1>
       <p id="heroSub">Kumpulan link afiliasi terpercaya untuk investasi, belanja, perjalanan, dan teknologi.</p>
+      <a href="#mainContent" class="cta-btn" id="ctaBtn">Jelajahi Semua Link <i class="fas fa-arrow-right"></i></a>
       <div class="hero-categories" id="heroCats"></div>
     </div>
+  </section>
+
+  <section class="featured" id="featuredSection">
+    <div class="featured-header">
+      <h2>Rekomendasi Utama</h2>
+      <p>Link afiliasi pilihan dengan benefit terbaik</p>
+    </div>
+    <div class="featured-grid" id="featuredGrid"></div>
   </section>
 
   <main id="mainContent"></main>
@@ -31,8 +48,8 @@
   <footer>
     <div class="footer-content">
       <div class="footer-brand">
-        <h3>FREDI SUSANTO BENGALON KUTIM</h3>
-        <p>Kumpulan link afiliasi terpercaya.</p>
+        <h3>Fredi Susanto</h3>
+        <p>Kumpulan link afiliasi & portofolio pribadi.<br>Bengalon, Kutai Timur.</p>
       </div>
       <div class="footer-links">
         <h4>Kategori</h4>
@@ -45,11 +62,13 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 FREDI SUSANTO BENGALON KUTIM. Beberapa link merupakan link afiliasi.</p>
+      <p>&copy; 2026 Fredi Susanto. Beberapa link merupakan link afiliasi.</p>
     </div>
   </footer>
 
 <script>
+const FEATURED_IDS = ["shopee", "ajaib", "quickpro"];
+
 async function loadContent() {
   try {
     const res = await fetch("/api/content");
@@ -58,25 +77,35 @@ async function loadContent() {
   } catch { renderFallback(); }
 }
 
+function shortLabel(title) {
+  const parts = title.split(/[\s&\/]+/);
+  if (parts.length === 1) return parts[0];
+  if (parts[0] === "Forex") return "Forex";
+  if (parts[0] === "Crypto") return "Crypto";
+  if (parts[0] === "Keuangan") return "E-Wallet";
+  return parts[0];
+}
+
 function renderAll(data) {
   const hero = data.hero || {};
   const sections = data.sections || [];
   document.getElementById("heroTitle").innerHTML = (hero.title || "Solusi Bisnis & Investasi") + "<br><span>" + (hero.highlight || "Terpercaya") + "</span>";
   document.getElementById("heroSub").textContent = hero.subtitle || "Kumpulan link afiliasi terpercaya.";
-  const navLinks = document.getElementById("navLinks");
   const heroCats = document.getElementById("heroCats");
   const footerNav = document.getElementById("footerNav");
   const main = document.getElementById("mainContent");
-  let navHTML = "", heroHTML = "", mainHTML = "", footerHTML = "";
+  const featuredGrid = document.getElementById("featuredGrid");
+  let heroHTML = "", mainHTML = "", footerHTML = "", featuredHTML = "";
+  let featuredLinks = [];
+
   for (const s of sections) {
     const sid = s.id || s.title?.toLowerCase().replace(/\s+/g, "") || "section-" + Math.random().toString(36).slice(2,6);
     if (s.type === "custom") {
       mainHTML += `<section id="${sid}" class="custom-section">${s.html || ""}</section>`;
       continue;
     }
-    const label = s.title?.split(" ").pop() || s.icon || sid;
-    navHTML += `<a href="#${sid}">${label}</a>`;
-    heroHTML += `<span>${s.icon || ""} ${label}</span>`;
+    const label = shortLabel(s.title || "");
+    heroHTML += `<a href="#${sid}" class="cat-tag">${s.icon || ""} ${label}</a>`;
     footerHTML += `<a href="#${sid}">${s.icon || ""} ${label}</a>`;
     let linksHTML = "";
     for (const l of s.links || []) {
@@ -85,6 +114,9 @@ function renderAll(data) {
         <span class="card-title">${l.name || 'Link'}</span>
         <span class="card-desc">${l.desc || ''}</span>
       </a>`;
+      if (FEATURED_IDS.includes(sid) || FEATURED_IDS.includes(l.name?.toLowerCase().replace(/\s+/g, ""))) {
+        featuredLinks.push({ ...l, sectionIcon: s.icon, sectionTitle: s.title });
+      }
     }
     if (linksHTML) {
       mainHTML += `<section id="${sid}">
@@ -96,10 +128,39 @@ function renderAll(data) {
       </section>`;
     }
   }
-  navLinks.innerHTML = navHTML || '<a href="#">Beranda</a>';
+
+  if (featuredLinks.length < 3) {
+    const extras = [];
+    for (const s of sections) {
+      for (const l of s.links || []) {
+        const lid = l.name?.toLowerCase().replace(/\s+/g, "");
+        if (!featuredLinks.find(f => f.name === l.name) && lid !== "#" && l.url !== "#") extras.push({ ...l, sectionIcon: s.icon, sectionTitle: s.title });
+      }
+    }
+    while (featuredLinks.length < 3 && extras.length) featuredLinks.push(extras.shift());
+  }
+
+  for (const l of featuredLinks.slice(0, 3)) {
+    featuredHTML += `<a href="${l.url}" target="_blank" rel="noopener" class="featured-card">
+      <div class="fc-icon"><i class="${l.icon || 'fas fa-link'}"></i></div>
+      <div class="fc-body">
+        <span class="fc-tag">${l.sectionIcon || ""} ${l.sectionTitle || ""}</span>
+        <span class="fc-title">${l.name || "Link"}</span>
+        <span class="fc-desc">${l.desc || ""}</span>
+      </div>
+      <div class="fc-arrow"><i class="fas fa-chevron-right"></i></div>
+    </a>`;
+  }
+  featuredGrid.innerHTML = featuredHTML || "";
   heroCats.innerHTML = heroHTML || "";
   main.innerHTML = mainHTML || "<p style='text-align:center;padding:2rem;color:#64748b'>Konten belum tersedia.</p>";
   footerNav.innerHTML = footerHTML || "";
+
+  const cta = document.getElementById("ctaBtn");
+  if (sections.length) {
+    const first = sections.find(s => s.type !== "custom");
+    if (first) cta.href = "#" + (first.id || shortLabel(first.title || "").toLowerCase());
+  }
 }
 
 function renderFallback() {

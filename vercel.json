@@ -3,5 +3,8 @@
   "functions": {
     "api/admin.py": { "maxDuration": 10 },
     "api/content.py": { "maxDuration": 10 }
-  }
+  },
+  "rewrites": [
+    { "source": "/portfolio", "destination": "/portfolio.html" }
+  ]
 }

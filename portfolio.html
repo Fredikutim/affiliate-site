@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portofolio Fredi Susanto — Proyek dan karya pilihan">
+  <title>Portofolio — Fredi Susanto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+<style>
+.portfolio-header {
+  padding: 8rem 1.5rem 3rem; text-align: center;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(167,139,250,.1), transparent),
+              #0a0a1a;
+}
+.portfolio-header h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 800; color: #f1f5f9; }
+.portfolio-header h1 span { background: linear-gradient(135deg,#38bdf8,#a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.portfolio-header p { color: #94a3b8; max-width: 500px; margin: .75rem auto 0; }
+.projects { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 4rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.project-card {
+  padding: 2rem; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(30,41,59,.6), rgba(15,23,42,.6));
+  border: 1px solid rgba(255,255,255,.06);
+  transition: all .3s;
+}
+.project-card:hover { border-color: rgba(56,189,248,.3); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(56,189,248,.08); }
+.pc-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(56,189,248,.12); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #38bdf8; margin-bottom: 1rem; }
+.pc-title { font-size: 1.15rem; font-weight: 700; color: #f1f5f9; margin-bottom: .5rem; }
+.pc-desc { font-size: .9rem; color: #94a3b8; margin-bottom: 1rem; }
+.pc-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pc-tags span { font-size: .75rem; padding: .2rem .65rem; border-radius: 6px; background: rgba(56,189,248,.1); color: #38bdf8; font-weight: 500; }
+.pc-link { display: inline-flex; align-items: center; gap: .4rem; color: #38bdf8; text-decoration: none; font-size: .9rem; font-weight: 500; margin-top: 1rem; }
+.pc-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">Fredi Susanto</a>
+      <div class="nav-links">
+        <a href="/">Beranda</a>
+        <a href="/portfolio">Portofolio</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="portfolio-header">
+    <h1>Portofolio <span>Fredi Susanto</span></h1>
+    <p>Proyek dan karya pilihan — teknologi, AI, dan digital</p>
+  </div>
+
+  <div class="projects">
+    <div class="project-card">
+      <div class="pc-icon"><i class="fab fa-telegram"></i></div>
+      <div class="pc-title">Telegram AI Bot</div>
+      <div class="pc-desc">Bot Telegram multi-provider dengan AI chat, web search, image generation &amp; analysis. Mendukung Groq, OpenRouter, dan NVIDIA NIM. Hosting di Vercel.</div>
+      <div class="pc-tags"><span>Python</span><span>Flask</span><span>Vercel</span><span>AI</span></div>
+      <a href="https://t.me/vefredy_bot" target="_blank" rel="noopener" class="pc-link"><i class="fab fa-telegram"></i> @vefredy_bot</a>
+    </div>
+    <div class="project-card">
+      <div class="pc-icon"><i class="fas fa-globe"></i></div>
+      <div class="pc-title">Affiliate Landing Page</div>
+      <div class="pc-desc">Website affiliate dinamis dengan admin panel, AI Manager (Fredi AI), dan konten tersimpan di Vercel KV. Bisa diedit real-time tanpa redeploy.</div>
+      <div class="pc-tags"><span>HTML/CSS</span><span>JS</span><span>Python</span><span>Vercel KV</span></div>
+      <a href="https://affiliate-site-opal.vercel.app" target="_blank" rel="noopener" class="pc-link"><i class="fas fa-external-link-alt"></i> Kunjungi</a>
+    </div>
+    <div class="project-card">
+      <div class="pc-icon"><i class="fas fa-robot"></i></div>
+      <div class="pc-title">Fredi AI Assistant</div>
+      <div class="pc-desc">Asisten AI cerdas yang terintegrasi di admin panel. Bisa mengedit konten website secara natural language, menambah/menghapus section, dan mengelola link afiliasi.</div>
+      <div class="pc-tags"><span>OpenRouter</span><span>AI</span><span>JavaScript</span></div>
+      <a href="https://affiliate-site-opal.vercel.app/admin.html" target="_blank" rel="noopener" class="pc-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+    </div>
+    <div class="project-card">
+      <div class="pc-icon"><i class="fas fa-arrow-trend-up"></i></div>
+      <div class="pc-title">Multi-Provider AI Gateway</div>
+      <div class="pc-desc">Sistem yang menggabungkan 3 provider AI (Groq, OpenRouter, NVIDIA) dalam satu bot, dengan fallback otomatis dan pemilihan model via perintah.</div>
+      <div class="pc-tags"><span>Python</span><span>API</span><span>Serverless</span></div>
+      <a href="https://github.com/Fredikutim/telegram-ai-bot" target="_blank" rel="noopener" class="pc-link"><i class="fab fa-github"></i> GitHub</a>
+    </div>
+    <div class="project-card">
+      <div class="pc-icon"><i class="fas fa-palette"></i></div>
+      <div class="pc-title">UI/UX &amp; Web Design</div>
+      <div class="pc-desc">Desain website modern dengan tema gelap, gradien, animasi halus, dan tata letak responsif. Fokus pada pengalaman pengguna dan optimasi konversi.</div>
+      <div class="pc-tags"><span>CSS</span><span>Design</span><span>Responsive</span></div>
+    </div>
+    <div class="project-card">
+      <div class="pc-icon"><i class="fas fa-terminal"></i></div>
+      <div class="pc-title">OpenCode — AI Coding</div>
+      <div class="pc-desc">Menggunakan OpenCode (CLI AI coding agent) untuk mengembangkan dan memelihara proyek secara efisien — dari bot Telegram hingga website affiliate.</div>
+      <div class="pc-tags"><span>AI</span><span>CLI</span><span>DevOps</span></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Fredi Susanto</h3>
+        <p>Kumpulan link afiliasi & portofolio pribadi.<br>Bengalon, Kutai Timur.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigasi</h4>
+        <a href="/">Beranda</a>
+        <a href="/portfolio">Portofolio</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Kontak</h4>
+        <p><i class="fab fa-telegram"></i> @fredi_bot</p>
+        <p><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Fredi Susanto.</p>
+    </div>
+  </footer>
+</body>
+</html>
