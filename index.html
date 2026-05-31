@@ -4,11 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kumpulan link afiliasi & portofolio Fredi Susanto — Investasi, Crypto, Forex, Belanja, Teknologi">
-  <title>Fredi Susanto</title>
+  <title>Fredi Susanto | Solusi Bisnis & Investasi Digital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Tambahan CSS Khusus untuk Seksi Profil & Estetika */
+    .profile-section { max-width: 1100px; margin: 2rem auto 5rem; padding: 0 1.5rem; }
+    .profile-container { 
+      display: flex; align-items: center; gap: 3rem; 
+      background: linear-gradient(135deg, rgba(30,41,59,.8), rgba(15,23,42,.9)); 
+      border: 1px solid rgba(56,189,248,.2); 
+      padding: 3.5rem; border-radius: 24px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+    }
+    .profile-container::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+    }
+    .profile-image { flex-shrink: 0; position: relative; }
+    .profile-image img { 
+      width: 220px; height: 220px; border-radius: 50%; 
+      object-fit: cover; border: 4px solid rgba(56,189,248,.4); 
+      position: relative; z-index: 2;
+    }
+    .profile-image::after { 
+      content: ''; position: absolute; inset: -12px; 
+      border-radius: 50%; border: 2px dashed rgba(167,139,250,.5); 
+      animation: spin 15s linear infinite; z-index: 1;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .profile-info h2 { font-size: 2.2rem; font-weight: 800; color: #f1f5f9; margin-bottom: .25rem; }
+    .profile-info h2 span { color: #38bdf8; }
+    .profile-info .subtitle { font-size: 1.1rem; color: #a78bfa; font-weight: 600; margin-bottom: 1.2rem; letter-spacing: 0.5px; }
+    .profile-info .bio { color: #94a3b8; line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem; }
+    .profile-details { display: flex; flex-direction: column; gap: .85rem; }
+    .profile-details span { display: flex; align-items: center; gap: 1rem; color: #cbd5e1; font-size: 1rem; }
+    .profile-details i { color: #38bdf8; width: 24px; text-align: center; font-size: 1.2rem; }
+    @media (max-width: 768px) { 
+      .profile-container { flex-direction: column; text-align: center; padding: 2.5rem 1.5rem; } 
+      .profile-details span { justify-content: center; } 
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -16,6 +55,7 @@
       <a href="/" class="logo">Fredi Susanto</a>
       <div class="nav-links" id="navLinks">
         <a href="/">Beranda</a>
+        <a href="#profil">Profil</a>
         <a href="/portfolio">Portofolio</a>
       </div>
     </div>
@@ -28,17 +68,35 @@
       <div class="orb orb-3"></div>
     </div>
     <div class="hero-content">
-      <h1 id="heroTitle">Solusi Bisnis &amp; Investasi<br><span>Terpercaya</span></h1>
-      <p id="heroSub">Kumpulan link afiliasi terpercaya untuk investasi, belanja, perjalanan, dan teknologi.</p>
-      <a href="#mainContent" class="cta-btn" id="ctaBtn">Jelajahi Semua Link <i class="fas fa-arrow-right"></i></a>
+      <h1 id="heroTitle">Mulai Langkah Pintar Menuju<br><span>Kebebasan Finansial</span></h1>
+      <p id="heroSub">Kurasi tautan afiliasi premium, alat trading otomatis, dan solusi AI terbaik yang telah saya uji sendiri untuk memaksimalkan potensi bisnis Anda di era digital.</p>
+      <a href="#mainContent" class="cta-btn" id="ctaBtn">Eksplorasi Layanan <i class="fas fa-rocket"></i></a>
       <div class="hero-categories" id="heroCats"></div>
+    </div>
+  </section>
+
+  <section class="profile-section" id="profil">
+    <div class="profile-container">
+      <div class="profile-image">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Fredi Susanto - Digital Creator">
+      </div>
+      <div class="profile-info">
+        <h2>Mengenal <span>Fredi Susanto</span></h2>
+        <p class="subtitle">Tech Enthusiast, AI Developer & Affiliate Marketer</p>
+        <p class="bio">Halo! Saya mendedikasikan platform ini untuk membantu Anda menemukan alat (*tools*), platform investasi terpercaya, dan promo e-commerce terbaik. Selain dunia trading dan finansial, saya juga aktif mengembangkan solusi kecerdasan buatan (AI) yang dirancang untuk mempermudah pekerjaan digital sehari-hari.</p>
+        <div class="profile-details">
+           <span><i class="fas fa-map-marker-alt"></i> Bengalon, Kutai Timur, Kalimantan Timur</span>
+           <span><i class="fas fa-robot"></i> Kreator @vefredy_bot & Fredi AI Manager</span>
+           <span><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="featured" id="featuredSection">
     <div class="featured-header">
       <h2>Rekomendasi Utama</h2>
-      <p>Link afiliasi pilihan dengan benefit terbaik</p>
+      <p>Link afiliasi pilihan dengan benefit dan performa terbaik saat ini</p>
     </div>
     <div class="featured-grid" id="featuredGrid"></div>
   </section>
@@ -49,20 +107,20 @@
     <div class="footer-content">
       <div class="footer-brand">
         <h3>Fredi Susanto</h3>
-        <p>Kumpulan link afiliasi & portofolio pribadi.<br>Bengalon, Kutai Timur.</p>
+        <p>Kumpulan link afiliasi & portofolio teknologi.<br>Bengalon, Kutai Timur, Kaltim.</p>
       </div>
       <div class="footer-links">
-        <h4>Kategori</h4>
+        <h4>Kategori Layanan</h4>
         <div id="footerNav"></div>
       </div>
       <div class="footer-contact">
-        <h4>Kontak</h4>
+        <h4>Hubungi Saya</h4>
         <p><i class="fab fa-telegram"></i> @fredi_bot</p>
         <p><i class="fas fa-envelope"></i> fredisusantokutim@gmail.com</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Fredi Susanto. Beberapa link merupakan link afiliasi.</p>
+      <p>&copy; 2026 Fredi Susanto. Dibangun dengan <i class="fas fa-heart" style="color:#f472b6"></i> di Kutai Timur.</p>
     </div>
   </footer>
 
@@ -89,8 +147,14 @@ function shortLabel(title) {
 function renderAll(data) {
   const hero = data.hero || {};
   const sections = data.sections || [];
-  document.getElementById("heroTitle").innerHTML = (hero.title || "Solusi Bisnis & Investasi") + "<br><span>" + (hero.highlight || "Terpercaya") + "</span>";
-  document.getElementById("heroSub").textContent = hero.subtitle || "Kumpulan link afiliasi terpercaya.";
+  
+  if(hero.title) {
+    document.getElementById("heroTitle").innerHTML = hero.title + "<br><span>" + (hero.highlight || "Terpercaya") + "</span>";
+  }
+  if(hero.subtitle) {
+    document.getElementById("heroSub").textContent = hero.subtitle;
+  }
+
   const heroCats = document.getElementById("heroCats");
   const footerNav = document.getElementById("footerNav");
   const main = document.getElementById("mainContent");
@@ -164,7 +228,7 @@ function renderAll(data) {
 }
 
 function renderFallback() {
-  document.getElementById("mainContent").innerHTML = "<p style='text-align:center;padding:2rem;color:#64748b'>Memuat...</p>";
+  document.getElementById("mainContent").innerHTML = "<p style='text-align:center;padding:2rem;color:#64748b'>Memuat konten digital...</p>";
 }
 
 loadContent();
