@@ -32,7 +32,7 @@ DEFAULT = {"hero": {"title": "Solusi Investasi, Crypto & Bisnis", "highlight": "
                {"icon": "fas fa-hand-holding-heart", "name": "OVO", "desc": "Cashback & pembayaran digital favorit Indonesia", "url": "#"},
                {"icon": "fas fa-link", "name": "LinkAja", "desc": "Keuangan digital dari BUMN terpercaya", "url": "#"}]},
     {"id": "travel", "icon": "✈️", "title": "Travel & Akomodasi", "desc": "Rencanakan perjalanan Anda",
-     "links": [{"icon": "fas fa-plane", "name": "Traveloka", "desc": "Pesan tiket pesawat, hotel & aktivitas", "url": "#"},
+     "links": [{"icon": "https://i.ibb.co.com/XGdKkVR/traveloka.jpg", "name": "Traveloka", "desc": "Pesan tiket pesawat, hotel & aktivitas", "url": "https://trv.lk/e2d26562"},
                {"icon": "fas fa-hotel", "name": "Agoda", "desc": "Booking hotel murah di seluruh dunia", "url": "#"},
                {"icon": "fas fa-ticket", "name": "Tiket.com", "desc": "Travel partner for every journey", "url": "#"}]},
     {"id": "teknologi", "icon": "🤖", "title": "Teknologi & AI", "desc": "Inovasi digital untuk bisnis Anda",
