@@ -1,9 +1,10 @@
-import json
+import json, urllib.request, urllib.error, ssl
 from http.server import BaseHTTPRequestHandler
-import requests
 
 DEFAULT_KEY = "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580"
 BASE = "https://ai.genfity.com/v1"
+
+ctx = ssl._create_unverified_context()
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -19,20 +20,26 @@ class handler(BaseHTTPRequestHandler):
             raw = self.rfile.read(length) if length > 0 else b"{}"
             body = json.loads(raw.decode("utf-8"))
             api_key = self.headers.get("X-Genfity-Key", "") or DEFAULT_KEY
-            endpoint = body.pop("_endpoint", "chat")
+            endpoint = body.get("_endpoint", "chat")
             api_path = "/messages" if endpoint == "anthropic" else "/chat/completions"
+            data = json.dumps(body).encode()
             headers = {
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json"
             }
             if endpoint == "anthropic":
                 headers["anthropic-version"] = "2023-06-01"
-            resp = requests.post(BASE + api_path, json=body, headers=headers, timeout=30)
-            self.send_response(resp.status_code)
+            req = urllib.request.Request(BASE + api_path, data=data, headers=headers, method="POST")
+            resp = urllib.request.urlopen(req, context=ctx, timeout=55)
+            result = resp.read()
+            self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
-            self.wfile.write(resp.content)
+            self.wfile.write(result)
+        except urllib.error.HTTPError as e:
+            err = e.read().decode()[:500]
+            self.reply(502, {"error": {"message": f"Genfity {e.code}: {err}"}})
         except Exception as e:
             self.reply(500, {"error": {"message": str(e)[:300]}})
 
