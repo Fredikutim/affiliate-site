@@ -126,6 +126,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
         </optgroup>
       </select>
       <button id="newChatBtn"><i class="fas fa-plus"></i> Baru</button>
+      <button id="settingsBtn" onclick="toggleSettings()" style="background:none;border:1px solid rgba(255,255,255,.1);color:#94a3b8;padding:.5rem .7rem"><i class="fas fa-key"></i></button>
+    </div>
+    <div id="settingsPanel" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:12px;background:rgba(15,23,42,.6);border:1px solid rgba(255,255,255,.06)">
+      <label style="font-size:.85rem;color:#94a3b8;display:block;margin-bottom:.4rem">API Key Genfity <span style="color:#f87171;font-size:.75rem">— ganti jika expired</span></label>
+      <div style="display:flex;gap:.5rem">
+        <input type="text" id="apiKeyInput" style="flex:1;padding:.6rem .8rem;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);color:#e2e8f0;font-size:.85rem;font-family:monospace;outline:none" placeholder="genfity_...">
+        <button onclick="saveApiKey()" style="padding:.6rem 1rem;border-radius:8px;border:none;background:linear-gradient(135deg,#38bdf8,#a78bfa);color:#0a0a1a;font-weight:600;font-size:.85rem;cursor:pointer">Simpan</button>
+      </div>
+      <div id="keyStatus" style="font-size:.8rem;margin-top:.4rem;color:#64748b"></div>
     </div>
 
     <div class="chat-messages" id="chatMessages"></div>
@@ -140,10 +149,27 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
   </div>
 
 <script>
-const API_KEY = "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580";
 const BASE_URL = "/api/genfity_proxy";
 let messages = [{ role: "system", content: "Kamu adalah asisten AI bernama Fredy AI. Jawab dengan ramah dan informatif dalam bahasa Indonesia." }];
-let pendingFile = null; // { type, data, name, text? }
+let pendingFile = null;
+
+function getApiKey() {
+  return localStorage.getItem("genfity_key") || "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580";
+}
+
+function toggleSettings() {
+  const p = document.getElementById("settingsPanel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+  if (p.style.display === "block") document.getElementById("apiKeyInput").value = getApiKey();
+}
+
+function saveApiKey() {
+  const val = document.getElementById("apiKeyInput").value.trim();
+  if (!val) { document.getElementById("keyStatus").textContent = "❌ Key tidak boleh kosong"; return; }
+  localStorage.setItem("genfity_key", val);
+  document.getElementById("keyStatus").textContent = "✅ Key tersimpan!";
+  setTimeout(() => document.getElementById("settingsPanel").style.display = "none", 1000);
+}
 
 function addMsg(role, content, extra) {
   const el = document.getElementById("chatMessages");
@@ -248,7 +274,7 @@ async function sendMessage() {
   try {
     const resp = await fetch(BASE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-Genfity-Key": getApiKey() },
       body: JSON.stringify(body)
     });
     const data = await resp.json();
