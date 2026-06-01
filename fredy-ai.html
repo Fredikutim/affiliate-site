@@ -304,6 +304,31 @@ function downloadDOCX(text) {
   URL.revokeObjectURL(a.href);
 }
 
+async function callGenfity(msgs, model, maxTok) {
+  const resp = await fetch(BASE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Genfity-Key": getApiKey() },
+    body: JSON.stringify({ model, messages: msgs, max_tokens: maxTok || 4096 })
+  });
+  const text = await resp.text();
+  let data;
+  try { data = JSON.parse(text); } catch (e) { throw new Error("Server: " + text.slice(0, 200)); }
+  if (!resp.ok) throw new Error(data.error?.message || resp.status);
+  return data.choices?.[0]?.message?.content || data.content?.[0]?.text || JSON.stringify(data);
+}
+
+function splitText(text, maxLen) {
+  const parts = [], paragraphs = text.split(/\n\n+/);
+  let current = "";
+  for (const p of paragraphs) {
+    if ((current + "\n\n" + p).length > maxLen && current.length > 100) {
+      parts.push(current.trim()); current = p;
+    } else current += (current ? "\n\n" : "") + p;
+  }
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+}
+
 async function sendMessage() {
   const input = document.getElementById("chatInput");
   const btn = document.getElementById("sendBtn");
@@ -316,6 +341,7 @@ async function sendMessage() {
   const images = pendingFiles.filter(f => f.type === "image");
   const docs = pendingFiles.filter(f => f.type === "text");
   let content, displayText = text || "";
+  let isLong = false;
 
   if (images.length) {
     const parts = [];
@@ -329,10 +355,11 @@ async function sendMessage() {
     const msg = text ? `${text}\n\n${docText}` : docText;
     content = content ? (Array.isArray(content) ? [...content, { type: "text", text: msg }] : msg) : msg;
     displayText += (displayText ? "\n" : "") + docs.map(d => "📄 " + d.name).join("\n");
+    isLong = (typeof content === "string" ? content : msg).length > 5000;
   }
   if (!content) content = text;
 
-  addMsg("user", displayText);
+  addMsg("user", displayText + (isLong ? "\n⏳ Dokumen panjang, diproses per bagian..." : ""));
   const msgContent = typeof content === "string" ? content : content.map(c => c.text || "[image]").join(" ");
   if (typeof content === "string") messages.push({ role: "user", content });
   else messages.push({ role: "user", content: msgContent + ` [${images.length} image(s)]` });
@@ -341,25 +368,31 @@ async function sendMessage() {
   renderFilePreviews();
   btn.disabled = true;
   const loading = addMsg("assistant", "", " loading");
-
   const model = document.getElementById("modelSelect").value;
-  const body = typeof content === "string" ? { model, messages, max_tokens: 4096 }
-    : { model, messages: [...messages.slice(0, -1), { role: "user", content }], max_tokens: 4096 };
 
   try {
-    const resp = await fetch(BASE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Genfity-Key": getApiKey() },
-      body: JSON.stringify(body)
-    });
-    const text = await resp.text();
-    let data;
-    try { data = JSON.parse(text); } catch (e) { throw new Error("Server: " + text.slice(0, 200)); }
-    if (!resp.ok) throw new Error(data.error?.message || resp.status);
-    const reply = data.choices?.[0]?.message?.content || data.content?.[0]?.text || JSON.stringify(data);
+    let reply;
+    if (isLong && typeof content === "string") {
+      // Extract instructions (revisi) from first part, then split document
+      const parts = splitText(content, 4000);
+      const instructions = parts[0]; // revision comments etc
+      const docChunks = parts.slice(1);
+      let results = [];
+      for (let i = 0; i < docChunks.length; i++) {
+        loading.querySelector(".msg-bubble").textContent = `⏳ Memproses bagian ${i+1}/${docChunks.length}...`;
+        const prompt = `Instruksi revisi:\n${instructions}\n\nBagian dokumen ${i+1} dari ${docChunks.length} yang perlu diperbaiki:\n${docChunks[i]}\n\nTerapkan revisi di atas pada bagian ini. Output hanya bagian yang sudah diperbaiki, tanpa komentar tambahan.`;
+        const r = await callGenfity([{ role: "system", content: "Kamu adalah asisten akademik. Terapkan revisi pada teks yang diberikan." }, { role: "user", content: prompt }], model, 4096);
+        results.push(r);
+      }
+      reply = results.join("\n\n");
+    } else {
+      const body = typeof content === "string"
+        ? { model, messages, max_tokens: 4096 }
+        : { model, messages: [...messages.slice(0, -1), { role: "user", content }], max_tokens: 4096 };
+      reply = await callGenfity(body.messages, model, 4096);
+    }
     messages.push({ role: "assistant", content: reply });
     loading.querySelector(".msg-bubble").innerHTML = reply.replace(/\n/g, "<br>");
-    // add download buttons
     const act = document.createElement("div");
     act.style.cssText = "display:flex;gap:.4rem;margin-top:.5rem";
     const pdfBtn = document.createElement("span"); pdfBtn.className = "dl-btn"; pdfBtn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
