@@ -168,7 +168,7 @@ async function sendMessage() {
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error?.message || resp.status);
-    const reply = data.choices[0].message.content;
+    const reply = data.choices?.[0]?.message?.content || data.content?.[0]?.text || JSON.stringify(data);
     messages.push({ role: "assistant", content: reply });
     loading.querySelector(".msg-bubble").innerHTML = reply.replace(/\n/g, "<br>");
     loading.classList.remove("loading");
