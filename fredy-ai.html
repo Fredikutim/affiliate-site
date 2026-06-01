@@ -61,9 +61,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
 .input-bar .upload-btn { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: rgba(15,23,42,.8); color: #94a3b8; cursor: pointer; flex-shrink: 0; transition: all .2s; }
 .input-bar .upload-btn:hover { background: rgba(56,189,248,.1); color: #38bdf8; }
 .file-preview { padding: .5rem .75rem; margin-top: .25rem; border-radius: 10px; background: rgba(15,23,42,.6); border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; gap: .75rem; }
-.file-preview img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
-.file-preview .fp-name { font-size: .85rem; color: #e2e8f0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-preview .fp-remove { color: #ef4444; cursor: pointer; font-size: .9rem; }
+.file-preview .fp-name { font-size: .85rem; color: #e2e8f0; max-width: 150px; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+.file-preview .fp-remove { color: #ef4444; cursor: pointer; font-size: .9rem; margin-left: .2rem; }
 @media (max-width: 640px) {
   .chat-container { margin-top: 4.5rem; padding: 0 .75rem; }
   .msg-bubble { max-width: 90%; font-size: .85rem; }
@@ -140,7 +139,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
     <div class="chat-messages" id="chatMessages"></div>
 
     <div class="input-bar">
-      <label class="upload-btn"><i class="fas fa-paperclip"></i><input type="file" id="fileInput" accept="image/*,.pdf,.docx,.doc,.txt" hidden onchange="handleFile(event)"></label>
+      <label class="upload-btn"><i class="fas fa-paperclip"></i><input type="file" id="fileInput" accept="image/*,.pdf,.docx,.doc,.txt" hidden multiple onchange="handleFiles(event)"></label>
       <textarea id="chatInput" rows="1" placeholder="Ketik pesan..." onkeydown="if(event.key==='enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"></textarea>
       <button id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
     </div>
@@ -182,27 +181,54 @@ function addMsg(role, content, extra) {
   return d;
 }
 
-async function handleFile(e) {
-  const f = e.target.files[0];
-  if (!f) return;
-  const fp = document.getElementById("filePreview");
-  if (f.type.startsWith("image/")) {
-    const b64 = await toBase64(f);
-    pendingFile = { type: "image", data: b64, name: f.name };
-    fp.innerHTML = `<img src="${b64}"><span class="fp-name">${f.name}</span><span class="fp-remove" onclick="removeFile()"><i class="fas fa-times"></i></span>`;
-  } else {
-    const text = await extractText(f);
-    pendingFile = { type: "text", data: text, name: f.name };
-    const icon = f.name.endsWith(".pdf") ? "fa-file-pdf" : f.name.endsWith(".docx") || f.name.endsWith(".doc") ? "fa-file-word" : "fa-file-alt";
-    fp.innerHTML = `<i class="fas ${icon}" style="font-size:1.4rem;color:#38bdf8"></i><span class="fp-name">${f.name}</span><span class="fp-remove" onclick="removeFile()"><i class="fas fa-times"></i></span>`;
+let pendingFiles = [];
+
+async function handleFiles(e) {
+  const files = Array.from(e.target.files);
+  const maxNew = 10 - pendingFiles.length;
+  if (files.length > maxNew) {
+    document.getElementById("keyStatus").textContent = `⚠️ Maksimal 10 file, ${maxNew} slot tersisa`;
+    document.getElementById("keyStatus").style.display = "block";
   }
-  fp.style.display = "flex";
+  for (const f of files.slice(0, maxNew)) {
+    if (f.type.startsWith("image/")) {
+      const b64 = await toBase64(f);
+      pendingFiles.push({ type: "image", data: b64, name: f.name });
+    } else {
+      const text = await extractText(f);
+      pendingFiles.push({ type: "text", data: text, name: f.name });
+    }
+  }
+  renderFilePreviews();
   e.target.value = "";
 }
 
-function removeFile() {
-  pendingFile = null;
-  document.getElementById("filePreview").style.display = "none";
+function renderFilePreviews() {
+  const fp = document.getElementById("filePreview");
+  if (!pendingFiles.length) { fp.style.display = "none"; return; }
+  fp.innerHTML = pendingFiles.map((pf, i) => {
+    if (pf.type === "image") {
+      return `<span style="display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem;white-space:nowrap">
+        <img src="${pf.data}" style="width:28px;height:28px;border-radius:4px;object-fit:cover">
+        <span class="fp-name">${pf.name}</span>
+        <span class="fp-remove" onclick="removeFile(${i})"><i class="fas fa-times"></i></span>
+      </span>`;
+    }
+    const icon = pf.name.endsWith(".pdf") ? "fa-file-pdf" : pf.name.endsWith(".docx") ? "fa-file-word" : "fa-file-alt";
+    return `<span style="display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.3);border-radius:6px;font-size:.8rem;white-space:nowrap">
+      <i class="fas ${icon}" style="color:#38bdf8"></i>
+      <span class="fp-name">${pf.name}</span>
+      <span class="fp-remove" onclick="removeFile(${i})"><i class="fas fa-times"></i></span>
+    </span>`;
+  }).join("");
+  fp.style.display = "flex";
+  fp.style.flexWrap = "wrap";
+  fp.style.gap = ".4rem";
+}
+
+function removeFile(idx) {
+  pendingFiles.splice(idx, 1);
+  renderFilePreviews();
 }
 
 function toBase64(f) {
@@ -241,29 +267,37 @@ async function sendMessage() {
   const input = document.getElementById("chatInput");
   const btn = document.getElementById("sendBtn");
   const text = input.value.trim();
-  if ((!text && !pendingFile) || btn.disabled) return;
+  if ((!text && !pendingFiles.length) || btn.disabled) return;
 
   input.value = "";
   input.style.height = "auto";
 
-  let content;
-  if (pendingFile && pendingFile.type === "image") {
-    content = [{ type: "text", text: text || "Analisis gambar ini" }, { type: "image_url", image_url: { url: pendingFile.data } }];
-    addMsg("user", (text || "Analisis gambar ini") + "\n📷 " + pendingFile.name);
-  } else if (pendingFile && pendingFile.type === "text") {
-    const fullText = text ? `${text}\n\n---\nFile: ${pendingFile.name}\n\n${pendingFile.data}` : `File: ${pendingFile.name}\n\n${pendingFile.data}`;
-    content = fullText;
-    addMsg("user", (text || "") + "\n📄 " + pendingFile.name);
-  } else {
-    content = text;
-    addMsg("user", text);
-  }
+  const images = pendingFiles.filter(f => f.type === "image");
+  const docs = pendingFiles.filter(f => f.type === "text");
+  let content, displayText = text || "";
 
+  if (images.length) {
+    const parts = [];
+    if (text) parts.push({ type: "text", text });
+    for (const img of images) parts.push({ type: "image_url", image_url: { url: img.data } });
+    content = parts;
+    displayText += (text ? "\n" : "") + images.map(i => "📷 " + i.name).join("\n");
+  }
+  if (docs.length) {
+    const docText = docs.map(d => `--- File: ${d.name}\n${d.data}`).join("\n\n");
+    const msg = text ? `${text}\n\n${docText}` : docText;
+    content = content ? (Array.isArray(content) ? [...content, { type: "text", text: msg }] : msg) : msg;
+    displayText += (displayText ? "\n" : "") + docs.map(d => "📄 " + d.name).join("\n");
+  }
+  if (!content) content = text;
+
+  addMsg("user", displayText);
   const msgContent = typeof content === "string" ? content : content.map(c => c.text || "[image]").join(" ");
   if (typeof content === "string") messages.push({ role: "user", content });
-  else messages.push({ role: "user", content: msgContent + " [image attached]" });
+  else messages.push({ role: "user", content: msgContent + ` [${images.length} image(s)]` });
 
-  removeFile();
+  pendingFiles = [];
+  renderFilePreviews();
   btn.disabled = true;
   const loading = addMsg("assistant", "", " loading");
 
@@ -294,6 +328,8 @@ async function sendMessage() {
 document.getElementById("newChatBtn").onclick = () => {
   messages = [{ role: "system", content: "Kamu adalah asisten AI bernama Fredy AI. Jawab dengan ramah dan informatif dalam bahasa Indonesia." }];
   document.getElementById("chatMessages").innerHTML = "";
+  pendingFiles = [];
+  renderFilePreviews();
 };
 </script>
 </body>
