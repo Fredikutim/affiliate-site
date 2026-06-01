@@ -17,17 +17,20 @@ class handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("content-length", 0))
             raw = self.rfile.read(length) if length > 0 else b"{}"
             body = json.loads(raw.decode("utf-8"))
+            endpoint = body.pop("_endpoint", "chat")
+            api_path = "/messages" if endpoint == "anthropic" else "/chat/completions"
             data = json.dumps(body).encode()
             req = urllib.request.Request(
-                BASE + "/chat/completions",
+                BASE + api_path,
                 data=data,
                 headers={
                     "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "anthropic-version": "2023-06-01"
                 },
                 method="POST"
             )
-            resp = urllib.request.urlopen(req, timeout=30)
+            resp = urllib.request.urlopen(req, timeout=60)
             result = resp.read()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
@@ -35,10 +38,10 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(result)
         except urllib.error.HTTPError as e:
-            err = e.read().decode()[:500]
-            self.reply(502, {"error": {"message": err}})
+            err_body = e.read().decode()[:500]
+            self.reply(502, {"error": {"message": f"HTTP {e.code}: {err_body}"}})
         except Exception as e:
-            self.reply(500, {"error": {"message": str(e)[:200]}})
+            self.reply(500, {"error": {"message": str(e)[:300]}})
 
     def reply(self, code, obj):
         self.send_response(code)
