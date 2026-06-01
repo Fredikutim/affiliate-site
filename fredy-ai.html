@@ -305,10 +305,11 @@ function downloadDOCX(text) {
 }
 
 async function callGenfity(msgs, model, maxTok) {
+  const ep = model.startsWith("genfity/claude") ? "anthropic" : "chat";
   const resp = await fetch(BASE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Genfity-Key": getApiKey() },
-    body: JSON.stringify({ model, messages: msgs, max_tokens: maxTok || 4096 })
+    body: JSON.stringify({ model, messages: msgs, max_tokens: maxTok || 4096, _endpoint: ep })
   });
   const text = await resp.text();
   let data;
