@@ -5,6 +5,7 @@
     "api/content.py": { "maxDuration": 10 }
   },
   "rewrites": [
-    { "source": "/portfolio", "destination": "/portfolio.html" }
+    { "source": "/portfolio", "destination": "/portfolio.html" },
+    { "source": "/fredy-ai", "destination": "/fredy-ai.html" }
   ]
 }
