@@ -3,7 +3,6 @@ from http.server import BaseHTTPRequestHandler
 
 DEFAULT_KEY = "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580"
 BASE = "https://ai.genfity.com/v1"
-
 ctx = ssl._create_unverified_context()
 
 class handler(BaseHTTPRequestHandler):
@@ -22,6 +21,8 @@ class handler(BaseHTTPRequestHandler):
             api_key = self.headers.get("X-Genfity-Key", "") or DEFAULT_KEY
             endpoint = body.get("_endpoint", "chat")
             api_path = "/messages" if endpoint == "anthropic" else "/chat/completions"
+            if "_endpoint" in body:
+                del body["_endpoint"]
             data = json.dumps(body).encode()
             headers = {
                 "Authorization": f"Bearer {api_key}",
