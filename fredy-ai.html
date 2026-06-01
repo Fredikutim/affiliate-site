@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column; }
@@ -60,6 +62,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
 .usage-info { text-align: center; font-size: .75rem; color: #475569; padding: .5rem 0 1rem; }
 .input-bar .upload-btn { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: rgba(15,23,42,.8); color: #94a3b8; cursor: pointer; flex-shrink: 0; transition: all .2s; }
 .input-bar .upload-btn:hover { background: rgba(56,189,248,.1); color: #38bdf8; }
+.dl-btn { display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:6px;background:rgba(56,189,248,.1);color:#38bdf8;font-size:.75rem;cursor:pointer;transition:all .2s }
+.dl-btn:hover { background:rgba(56,189,248,.2); }
 .file-preview { padding: .5rem .75rem; margin-top: .25rem; border-radius: 10px; background: rgba(15,23,42,.6); border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; gap: .75rem; }
 .file-preview .fp-name { font-size: .85rem; color: #e2e8f0; max-width: 150px; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
 .file-preview .fp-remove { color: #ef4444; cursor: pointer; font-size: .9rem; margin-left: .2rem; }
@@ -176,6 +180,21 @@ function addMsg(role, content, extra) {
   d.className = "msg " + role + (extra || "");
   const avatar = role === "user" ? `<div class="msg-avatar"><i class="fas fa-user"></i></div>` : `<div class="msg-avatar"><i class="fas fa-robot"></i></div>`;
   d.innerHTML = avatar + `<div class="msg-bubble">${content.replace(/\n/g, '<br>')}</div>`;
+  if (role === "assistant" && content && !extra?.includes("loading") && !extra?.includes("error")) {
+    const act = document.createElement("div");
+    act.style.cssText = "display:flex;gap:.4rem;margin-top:.5rem";
+    const pdfBtn = document.createElement("span");
+    pdfBtn.className = "dl-btn";
+    pdfBtn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
+    pdfBtn.onclick = () => downloadPDF(content);
+    act.appendChild(pdfBtn);
+    const docxBtn = document.createElement("span");
+    docxBtn.className = "dl-btn";
+    docxBtn.innerHTML = '<i class="fas fa-file-word"></i> Word';
+    docxBtn.onclick = () => downloadDOCX(content);
+    act.appendChild(docxBtn);
+    d.querySelector(".msg-bubble").appendChild(act);
+  }
   el.appendChild(d);
   el.scrollTop = el.scrollHeight;
   return d;
@@ -261,6 +280,28 @@ async function extractText(f) {
   }
   if (name.endsWith(".doc")) return "[DOC file — konversi ke .docx untuk hasil optimal]";
   return "[File tidak didukung]";
+}
+
+function downloadPDF(text) {
+  const html = `<html><head><meta charset="utf-8"><style>body{font-family:sans-serif;padding:2rem;line-height:1.6;white-space:pre-wrap}</style></head><body>${text.replace(/\n/g,"<br>")}</body></html>`;
+  const blob = new Blob([html], { type: "application/pdf" });
+  // Use html2pdf for proper PDF
+  const el = document.createElement("div");
+  el.innerHTML = text.replace(/\n/g, "<br>");
+  el.style.cssText = "padding:2rem;font-family:sans-serif;font-size:14px;line-height:1.6;white-space:pre-wrap;position:absolute;left:-9999px";
+  document.body.appendChild(el);
+  html2pdf().set({ filename: "fredy-ai-response.pdf", html2canvas: { scale: 2 } }).from(el).save().then(() => document.body.removeChild(el));
+}
+
+function downloadDOCX(text) {
+  const lines = text.split("\n");
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"></head><body>${lines.map(l => `<p>${l}</p>`).join("")}</body></html>`;
+  const blob = new Blob([html], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "fredy-ai-response.docx";
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 async function sendMessage() {
