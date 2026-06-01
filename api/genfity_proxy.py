@@ -1,7 +1,7 @@
 import json, urllib.request, urllib.error
 from http.server import BaseHTTPRequestHandler
 
-API_KEY = "genfity_cb5ffbbb8207d3f34764e293d47d54f5a330fd09"
+API_KEY = "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580"
 BASE = "https://ai.genfity.com/v1"
 
 class handler(BaseHTTPRequestHandler):
