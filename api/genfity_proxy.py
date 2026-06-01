@@ -1,5 +1,6 @@
-import json, urllib.request, urllib.error
+import json
 from http.server import BaseHTTPRequestHandler
+import requests
 
 API_KEY = "genfity_67041d941c16155f2b9ada47f66dc1d12fadd580"
 BASE = "https://ai.genfity.com/v1"
@@ -19,27 +20,18 @@ class handler(BaseHTTPRequestHandler):
             body = json.loads(raw.decode("utf-8"))
             endpoint = body.pop("_endpoint", "chat")
             api_path = "/messages" if endpoint == "anthropic" else "/chat/completions"
-            data = json.dumps(body).encode()
-            req = urllib.request.Request(
-                BASE + api_path,
-                data=data,
-                headers={
-                    "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json",
-                    "anthropic-version": "2023-06-01"
-                },
-                method="POST"
-            )
-            resp = urllib.request.urlopen(req, timeout=60)
-            result = resp.read()
-            self.send_response(200)
+            headers = {
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json"
+            }
+            if endpoint == "anthropic":
+                headers["anthropic-version"] = "2023-06-01"
+            resp = requests.post(BASE + api_path, json=body, headers=headers, timeout=30)
+            self.send_response(resp.status_code)
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
-            self.wfile.write(result)
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode()[:500]
-            self.reply(502, {"error": {"message": f"HTTP {e.code}: {err_body}"}})
+            self.wfile.write(resp.content)
         except Exception as e:
             self.reply(500, {"error": {"message": str(e)[:300]}})
 
