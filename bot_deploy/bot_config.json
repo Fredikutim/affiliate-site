@@ -1,0 +1,64 @@
+{
+  "_note": "Konfigurasi Bot Trading Super - FelixBot Edition",
+
+  "mode": "SPOT",
+  "mode_options": ["SPOT", "FUTURES_ISOLATED", "FUTURES_CROSS", "GRID_SPOT", "DCA_SPOT"],
+
+  "api": {
+    "key": "a5OSS4g33V4lmzmMcIhFxwOGpwrcVy8ByKajnm8kda8dGApi14XzmueSSDRbXMyM",
+    "secret": "dJuntErBK4xu1WBQkSQ6Aim7MdTq2fM8NOjp5KuCArb90hkGmyD6yS32g7LTCvYo"
+  },
+
+  "leverage": 3,
+  "leverage_options": [1, 2, 3, 5, 10, 20],
+
+  "entry_strategy": "SMA_CROSS",
+  "strategy_options": [
+    "SMA_CROSS",
+    "MACD_CROSS",
+    "RSI_BOUNCE",
+    "BB_BOUNCE",
+    "ICHIMOKU",
+    "EMA_CROSS_9_21",
+    "ALL_IN_ONE"
+  ],
+
+  "timeframe": {
+    "spot": "5m",
+    "futures": "15m",
+    "grid": "1h",
+    "dca": "1d"
+  },
+
+  "max_pairs": 15,
+  "max_positions": 3,
+  "risk_per_trade": 1.0,
+  "global_risk_limit": 5.0,
+
+  "grid": {
+    "enabled": false,
+    "levels": 10,
+    "spread_pct": 2.0,
+    "investment_per_level": 10.0
+  },
+
+  "dca": {
+    "enabled": false,
+    "interval_hours": 24,
+    "fixed_amount_usdt": 10,
+    "target_profit_pct": 20
+  },
+
+  "telegram": {
+    "enabled": false,
+    "bot_token": "",
+    "chat_id": ""
+  },
+
+  "felixbot": {
+    "enabled": true,
+    "auto_post": true,
+    "post_interval_minutes": 360,
+    "webhook_url": "http://127.0.0.1:18789/hooks/trade"
+  }
+}
